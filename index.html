@@ -75,9 +75,9 @@
         }
 
         .lyric-text {
-            font-family: 'Great Vibes', cursive, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+            font-family: 'Great Vibes', cursive, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
             font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.3); /* Default dimmed state */
+            color: rgba(255, 255, 255, 0.2); /* Bohat halka default taaki highlight chamke */
             line-height: 1.6;
             display: inline-block;
             position: absolute;
@@ -85,45 +85,52 @@
             transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Word Focus: The current word being "written" or sung */
         .lyric-word {
             display: inline-block;
             margin-right: 0.35em;
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
             position: relative;
-            filter: blur(1px);
+            filter: blur(1.5px);
         }
 
         .focused-word {
             color: #ffffff !important;
             filter: blur(0px) !important;
-            transform: scale(1.15);
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 77, 109, 0.5);
+            transform: scale(1.18);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 77, 109, 0.4);
             z-index: 10;
         }
 
-        /* Underline Glow for the active word */
         .focused-word::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
+            bottom: -8px;
+            left: 10%;
+            width: 80%;
             height: 2px;
             background: linear-gradient(90deg, transparent, #ff4d6d, transparent);
-            box-shadow: 0 5px 15px #ff4d6d;
-            animation: glow-line 1s infinite alternate;
+            box-shadow: 0 5px 20px #ff4d6d;
+            animation: glow-line 1.2s infinite alternate;
         }
 
         @keyframes glow-line {
-            from { opacity: 0.4; transform: scaleX(0.8); }
-            to { opacity: 1; transform: scaleX(1.2); }
+            from { opacity: 0.3; transform: scaleX(0.7); }
+            to { opacity: 1; transform: scaleX(1.3); }
         }
+
+        /* --- SPECIAL WORD COLORS --- */
+        .georgia-shade { color: #ff85a2 !important; } /* Rose Pink */
+        .love-shade { color: #ff4d6d !important; } /* Crimson Red */
+        .you-shade { color: #00d4ff !important; } /* Neon Cyan */
+        .found-shade { color: #ffd700 !important; } /* Gold */
+        .dark-shade { color: #4a4e69 !important; } /* Deep Muted Gray/Purple */
+        .heaven-shade { color: #ffffff !important; text-shadow: 0 0 35px #fff !important; } /* Glowing White */
+        .story-shade { color: #fbbf24 !important; } /* Amber/Storybook Gold */
 
         .old-line {
             opacity: 0;
             transform: translateY(40px) scale(0.9);
-            filter: blur(15px);
+            filter: blur(20px);
             pointer-events: none;
         }
 
@@ -133,21 +140,54 @@
             transform: translateY(5px);
         }
 
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            background: white;
-            border-radius: 50%;
-            z-index: 2000;
-            box-shadow: 0 0 10px #fff;
-        }
-
         @media (min-width: 768px) { .lyric-text { font-size: 3.5rem; } }
 
-        /* Color Overrides for Words */
-        .love-shade { color: #ff4d6d; }
-        .you-shade { color: #00d4ff; }
-        .heaven-shade { text-shadow: 0 0 30px #fff; color: white; }
+        /* --- MAGIC FLORAL VINES --- */
+        .floral-container {
+            position: relative;
+            padding: 40px;
+            display: inline-block;
+            transition: transform 0.5s ease;
+        }
+
+        .vine-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .vine-path {
+            fill: none;
+            stroke: #ff4d6d;
+            stroke-width: 1.5;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 1.8s ease-out;
+            opacity: 0.7;
+        }
+
+        .floral-container.active .vine-path {
+            stroke-dashoffset: 0;
+        }
+
+        .image-frame {
+            position: relative;
+            z-index: 2;
+            border: 8px solid white;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+            transform: rotate(-2deg);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 100%;
+        }
+
+        .floral-container.active .image-frame {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 77, 109, 0.3);
+        }
 
         .heart {
             position: absolute;
@@ -173,15 +213,6 @@
 
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .image-frame {
-            border: 8px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transform: rotate(-2deg);
-            transition: transform 0.3s;
-            max-width: 100%;
-        }
-        .image-frame:hover { transform: rotate(0deg) scale(1.02); }
 
         .timeline-line {
             position: absolute;
@@ -244,6 +275,15 @@
             min-width: 140px;
             touch-action: none;
         }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            background: white;
+            border-radius: 50%;
+            z-index: 2000;
+            box-shadow: 0 0 10px #fff;
+        }
     </style>
 </head>
 <body class="gradient-bg">
@@ -256,9 +296,7 @@
     <!-- Synced Lyrics Container -->
     <div id="lyrics-container">
         <div id="lyric-aura"></div>
-        <div id="lyric-wrapper" class="lyric-line-wrapper">
-            <!-- New and old lines appear here -->
-        </div>
+        <div id="lyric-wrapper" class="lyric-line-wrapper"></div>
     </div>
 
     <!-- Landing Gateway -->
@@ -281,7 +319,6 @@
     <!-- Main Content -->
     <div id="main-content" class="relative z-10 hidden opacity-0 transition-opacity duration-1000">
         
-        <!-- (1) Hero Section -->
         <header class="h-screen flex flex-col items-center justify-center text-center px-4">
             <div class="reveal">
                 <h1 class="text-7xl md:text-[10rem] text-pink-500 mb-6 drop-shadow-2xl">Bhumika</h1>
@@ -293,7 +330,7 @@
             </div>
         </header>
 
-        <!-- (2) Masterpiece Section -->
+        <!-- Emotional Sections -->
         <section class="bg-pink-900/5">
             <div class="card-glass p-10 md:p-24 max-w-4xl reveal text-center mx-4">
                 <h2 class="text-5xl text-pink-300 mb-10">You are My Masterpiece... 🎨</h2>
@@ -302,7 +339,6 @@
             </div>
         </section>
 
-        <!-- (3) Letter Section -->
         <section>
             <div class="card-glass p-8 md:p-20 max-w-5xl reveal mx-auto border border-pink-500/10">
                 <h2 class="text-5xl text-pink-400 mb-10">Babyy... 🥺</h2>
@@ -314,72 +350,7 @@
             </div>
         </section>
 
-        <!-- (4) Thinking Section -->
-        <section class="bg-black/40">
-            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-left mx-4 border-l-8 border-pink-600">
-                <h2 class="text-4xl text-pink-400 mb-8 italic">Thinking About You...</h2>
-                <div class="romantic-text text-2xl md:text-3xl leading-relaxed type-writer" data-text="I just wanted to let u know... that I love you so much and you're always on my mind thinking about u and how pretty u are 24/7. I struggle to sleep thinking about u a lot... knowing that your the only pretty boy I want and need in my life..!!">
-                </div>
-            </div>
-        </section>
-
-        <!-- (5) Hindi Poetry Section -->
-        <section class="bg-black/20">
-            <div class="max-w-4xl text-center reveal space-y-12 px-4">
-                <h2 class="text-6xl text-pink-300">Tumhari Aankhein... 🌷</h2>
-                <div class="space-y-8 text-xl md:text-3xl font-light text-pink-50 leading-loose type-writer" data-text="मैंने तुम्हारी आँखों में उन ख़वाबों को चलते हुए देखा है... जलते दिल की सस्कियो पर... ✨ उन आँसुओ को गिरते हुए देखा है... ❤️‍🩹 मैंने तुम्हारी आँखों में खाली मुक़द्दर को भी संजते हुए देखा है... हंसते हुए ख्यालों में अपने हमसफर को गले लगते हुए देखा है... मैंने तुम्हारी आँखों में सब कुछ पाते हुए देखा है... ढाई किलो की खुशियों को सबमे बांटते हुए देखा है...">
-                </div>
-                <p class="text-pink-400 font-bold mt-10 text-3xl md:text-5xl reveal">मैंने तुम्हारी आँखों में तुमसा बेहतर कुछ नहीं देखा है।</p>
-            </div>
-        </section>
-
-        <!-- (6) Hug Section -->
-        <section>
-            <div class="card-glass p-10 md:p-20 max-w-4xl reveal text-center mx-4">
-                <div class="text-6xl mb-8">🫂❤️</div>
-                <div class="romantic-text text-2xl md:text-4xl leading-relaxed type-writer" data-text="I want to be hugging u so tight any single time I get the chance... u always put a smile on my face no matter what. If your ever sad or mad I will always be there for u.">
-                </div>
-            </div>
-        </section>
-
-        <!-- (7) Chat Memories Section -->
-        <section class="flex flex-col items-center">
-            <h2 class="text-5xl text-pink-400 mb-20 text-center">Those Late Night Texts...</h2>
-            <div class="w-full max-w-2xl flex flex-col space-y-6 px-6">
-                <div class="chat-bubble chat-left reveal">"I love you"</div>
-                <div class="chat-bubble chat-right reveal">"I love you when I wake up"</div>
-                <div class="chat-bubble chat-left reveal">"I love you when I go to bed"</div>
-                <div class="chat-bubble chat-right reveal">"I love you in the middle of the day"</div>
-                <div class="chat-bubble chat-left reveal">"I love you cause of your smile"</div>
-                <div class="chat-bubble chat-right reveal">"I love you cause of your pretty face"</div>
-                <div class="chat-bubble chat-left reveal text-pink-400 font-bold">"I love you to the moon and back"</div>
-                <div class="chat-bubble chat-right reveal bg-pink-700">"And u will be forever mine and I'll forever be yours"</div>
-            </div>
-        </section>
-
-        <!-- (8) Biggest Part Section -->
-        <section class="bg-pink-950/10">
-            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-center mx-4 border-t-8 border-pink-500">
-                <div class="romantic-text text-3xl md:text-5xl font-bold mb-10 text-pink-300">"U are one of my biggest part of my whole life..."</div>
-                <div class="romantic-text text-2xl md:text-3xl italic leading-relaxed type-writer" data-text="I want to be with u always forever till we die... I appreciate having u in my life!!! For helping me through the bad times and being there to help me celebrate the good times.">
-                </div>
-                <div class="mt-12 flex justify-center gap-4 text-4xl">💙 🌍 ♾️</div>
-            </div>
-        </section>
-
-        <!-- (9) Daily Rhythm Section -->
-        <section class="bg-black/60">
-            <div class="max-w-4xl reveal space-y-16 px-4 text-center">
-                <h2 class="text-5xl text-pink-400 font-cursive">My Whole Day...</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Wake Up</h3><p>Sabse pehle khyal tumhara.</p></div>
-                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Noon</h3><p>Baaton ka intezar.</p></div>
-                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Raat</h3><p>Sapne humare sath ke.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- (10) Story Timeline Section -->
+        <!-- Memories Timeline -->
         <section class="relative">
             <div class="timeline-line"></div>
             <div class="w-full max-w-6xl mx-auto px-6 py-20">
@@ -391,8 +362,9 @@
                             <p class="romantic-text">Garden mein jab tum pehli baar aayi thi... humne haath naapa tha, yaad hai?</p>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
-                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm">
-                                <img src="https://i.postimg.cc/QthKbwtN/529334275-695857513476418-1126552635426847650-n.jpg" class="w-full h-auto" alt="Pehli Mulakat">
+                            <div class="floral-container">
+                                <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100 M0,0 Q50,20 100,0 M0,100 Q50,80 100,100" /></svg>
+                                <img src="https://i.postimg.cc/QthKbwtN/529334275-695857513476418-1126552635426847650-n.jpg" class="image-frame rounded-lg max-w-sm" alt="Pehli Mulakat">
                             </div>
                         </div>
                     </div>
@@ -402,19 +374,9 @@
                             <p class="romantic-text">December mein jab tumne bouquet diya... us raat main ro diya tha khushi se. Pata chala pyaar kya hota hai.</p>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
-                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm" style="transform: rotate(2deg)">
-                                <img src="https://i.postimg.cc/HxXZgw5b/528056378-771947991886302-8605683557653560640-n.jpg" class="w-full h-auto" alt="Bouquet">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-center reveal gap-10">
-                        <div class="md:w-1/2 text-center md:text-right">
-                            <h3 class="text-5xl text-pink-400 mb-4">3 Ghante Ki Walk</h3>
-                            <p class="romantic-text">Morning walk ke wo 3 ghante... haath pakad kar aisa laga ki kabhi nahi chhodna hai.</p>
-                        </div>
-                        <div class="md:w-1/2 flex justify-center">
-                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm">
-                                <img src="https://i.postimg.cc/nhKqp3wF/528075826-615554604658640-8336941647408441677-n.jpg" class="w-full h-auto" alt="Morning Walk">
+                            <div class="floral-container">
+                                <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100 M0,0 Q50,20 100,0 M0,100 Q50,80 100,100" /></svg>
+                                <img src="https://i.postimg.cc/HxXZgw5b/528056378-771947991886302-8605683557653560640-n.jpg" class="image-frame rounded-lg max-w-sm" style="transform: rotate(2deg)" alt="Bouquet">
                             </div>
                         </div>
                     </div>
@@ -422,78 +384,28 @@
             </div>
         </section>
 
-        <!-- (11) No Replacement Section -->
-        <section class="bg-pink-900/10">
-            <div class="card-glass p-12 md:p-24 max-w-4xl reveal text-center mx-4 border-b-4 border-pink-500/30">
-                <div class="romantic-text text-3xl md:text-5xl leading-relaxed type-writer font-bold" data-text="No matter what your mind tells you, I want you to know this truth... you are my only one, my forever and NO ONE could ever replace you.">
-                </div>
-                <p class="mt-8 text-pink-400 text-2xl italic">My only babeee, my wifeyyy, my honeyyy... ❤️</p>
-            </div>
-        </section>
-
-        <!-- (12) Gallery Section -->
+        <!-- Gallery -->
         <section class="flex flex-col items-center">
             <h2 class="text-6xl text-pink-500 mb-16">Moments Captured 📸</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-                <div class="reveal"><img src="https://iili.io/qHX3Npt.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 1"></div>
-                <div class="reveal"><img src="https://iili.io/qHX3wvI.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 2"></div>
-                <div class="reveal"><img src="https://iili.io/qHX3jYN.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 3"></div>
-                <div class="reveal"><img src="https://iili.io/qHX3h2p.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 4"></div>
-                <div class="reveal"><img src="https://iili.io/qHX3SCG.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 5"></div>
-                <div class="reveal"><img src="https://iili.io/qHX3g44.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 6"></div>
-                <div class="reveal"><img src="https://iili.io/qHX343l.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 7"></div>
-            </div>
-        </section>
-
-        <!-- (13) Gratitude Section -->
-        <section>
-            <div class="card-glass p-12 md:p-20 max-w-4xl reveal text-center mx-4 border-r-8 border-pink-500">
-                <div class="romantic-text text-2xl md:text-4xl italic type-writer" data-text="There aren't enough words in the dictionary for me to tell u how glad I am to have u in my life. I am so lucky to have u by my side. I am eternally grateful to have your love.">
+                <div class="reveal">
+                    <div class="floral-container">
+                        <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100 M0,0 Q50,20 100,0 M0,100 Q50,80 100,100" /></svg>
+                        <img src="https://iili.io/qHX3Npt.md.jpg" class="image-frame rounded-xl" alt="Photo 1">
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- (14) Strength Section -->
-        <section class="bg-black/30">
-            <div class="card-glass p-10 md:p-20 max-w-3xl reveal text-center mx-4">
-                <h2 class="text-4xl text-pink-300 mb-8">My Strongest Girl... 💪❤️</h2>
-                <div class="romantic-text text-xl md:text-3xl leading-relaxed type-writer" data-text="Your strength is what I admire the most. Your bravery, your intelligence, your passion... you are respectable in every way.">
+                <div class="reveal">
+                    <div class="floral-container">
+                        <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100 M0,0 Q50,20 100,0 M0,100 Q50,80 100,100" /></svg>
+                        <img src="https://iili.io/qHX3wvI.md.jpg" class="image-frame rounded-xl" alt="Photo 2">
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- (15) 42 Reasons Section -->
-        <section class="flex flex-col items-center">
-            <h2 class="text-6xl text-pink-500 text-center mb-20">42 Reasons Why I Love You</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-6" id="reasons-grid"></div>
-        </section>
-
-        <!-- (16) Truth Reveal Section -->
-        <section class="bg-pink-900/20">
-            <div class="card-glass p-12 md:p-32 reveal text-center mx-4 relative overflow-hidden">
-                <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
-                <div class="romantic-text text-3xl md:text-6xl font-cursive text-pink-200 type-writer" data-text="Babyyy, know this truth... you are my ONLY ONE. Forever.">
+                <div class="reveal">
+                    <div class="floral-container">
+                        <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100 M0,0 Q50,20 100,0 M0,100 Q50,80 100,100" /></svg>
+                        <img src="https://iili.io/qHX3jYN.md.jpg" class="image-frame rounded-xl" alt="Photo 3">
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- (17) Foolmati Special Section -->
-        <section class="bg-pink-600/5">
-            <div class="text-center reveal p-10 md:p-20 border-4 border-dashed border-pink-500/30 rounded-3xl mx-4 card-glass">
-                <h3 class="text-6xl mb-8 font-cursive">My Dear Foolmati! 🤡❤️</h3>
-                <div class="romantic-text text-2xl md:text-4xl italic type-writer" data-text="Babyy - if you could ever see yourself through my eyes, you'd never doubt your worth for even a second~">
-                </div>
-                <div class="flex justify-center gap-6 mt-12 text-5xl">
-                    <span class="animate-bounce">🥺</span> <span class="animate-pulse">❤️</span> <span class="animate-bounce" style="animation-delay: 0.2s">🥰</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- (18) Infinite Love Section -->
-        <section class="h-[60vh] flex items-center justify-center">
-            <div class="text-center reveal scale-125">
-                <div class="text-8xl mb-10">♾️</div>
-                <p class="romantic-text text-4xl text-pink-100">Our love has no end.</p>
             </div>
         </section>
 
@@ -501,12 +413,12 @@
         <section class="flex flex-col items-center justify-center overflow-hidden">
             <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-500 text-center mx-4">
                 <h2 class="text-6xl md:text-[8rem] text-pink-500 mb-10 font-cursive">Bhumika...</h2>
-                <h3 class="text-4xl md:text-5xl text-white mb-20 font-light leading-relaxed">Will you stay with me forever?</h3>
-                <div class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[150px]">
+                <h3 id="proposal-question" class="text-4xl md:text-5xl text-white mb-20 font-light leading-relaxed">Will you stay with me forever?</h3>
+                <div id="btn-container" class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[150px]">
                     <button id="yes-btn" class="w-48 py-6 bg-pink-600 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-500/30">YES ❤️</button>
                     <button id="no-btn" class="w-48 py-6 bg-gray-700/50 rounded-full font-bold text-2xl z-50">No</button>
                 </div>
-                <p id="response-msg" class="mt-12 text-3xl text-pink-400 font-bold opacity-0 transition-opacity duration-1000"></p>
+                <p id="response-msg" class="mt-12 text-4xl md:text-6xl text-pink-400 font-bold opacity-0 transition-opacity duration-1000 hidden"></p>
             </div>
         </section>
 
@@ -516,59 +428,50 @@
     </div>
 
     <script>
-        // --- REAL TIMESTAMPS WITH DIVERSE EMOJIS ---
+        // --- REAL TIMESTAMPS WITH DIVERSE & MEANINGFUL EMOJIS ---
         const lyrics = [
             { time: 0, text: "" },
-            { time: 10.04, text: "Georgia 🌹, wrap me up in all your ✨-" },
-            { time: 16.71, text: "I want you 💫 in my arms 🫂" },
-            { time: 22.27, text: "Oh, let me hold 🧸 you 🌟" },
-            { time: 27.22, text: "I'll never let you 💎 go again like I did" },
-            { time: 33.33, text: "Oh, I used to say" },
+            { time: 10.04, text: "Georgia 🌹, wrap me up 🎁 in all your ✨-" },
+            { time: 16.71, text: "I want you 🫵 in my arms 🫂" },
+            { time: 22.27, text: "Oh, let me hold 🤝 you 🫵" },
+            { time: 27.22, text: "I'll never let you 🫵 go 🕊️ again like I did 🚫" },
+            { time: 33.33, text: "Oh, I used to say 🗣️" },
             { time: 37.04, text: "\"I would never fall in love ❤️ again until I found 📍 her\"" },
-            { time: 44.16, text: "I said, \"I would never fall unless it's you 💖 I fall into\"" },
-            { time: 51.37, text: "I was lost 🧭 within the darkness 🌃, but then I found 🎯 her" },
-            { time: 58.19, text: "I found ✨ you 💘" },
+            { time: 44.16, text: "I said, \"I would never fall unless it's you 🫵 I fall into 💘\"" },
+            { time: 51.37, text: "I was lost 🧭 within the darkness 🌑, but then I found 🎯 her" },
+            { time: 58.19, text: "I found ✨ you 💍" },
             { time: 64.53, text: "" },
-            { time: 67.48, text: "Georgia 🌸, pulled me in" },
-            { time: 72.12, text: "I asked to love 💓 her once again" },
-            { time: 79.22, text: "You ✨ fell, I caught you 🫂" },
-            { time: 84.48, text: "I'll never let you 💫 go again like I did" },
-            { time: 90.48, text: "Oh, I used to say" },
-            { time: 94.00, text: "\"I would never fall in love 🥰 again until I found 📍 her\"" },
-            { time: 101.20, text: "I said, \"I would never fall unless it's you 💎 I fall into\"" },
-            { time: 108.36, text: "I was lost 🗺️ within the darkness 🌑, but then I found 🔍 her" },
-            { time: 115.03, text: "I found 🌟 you 💍" },
+            { time: 67.48, text: "Georgia 🌸, pulled me in ⚓" },
+            { time: 72.12, text: "I asked to love 💓 her once again 🔄" },
+            { time: 79.22, text: "You 🫵 fell, I caught you 🤲" },
+            { time: 84.48, text: "I'll never let you 🫵 go 🌬️ again like I did 🚫" },
+            { time: 90.48, text: "Oh, I used to say 💭" },
+            { time: 94.00, text: "\"I would never fall in love 🥰 again until I found 🗺️ her\"" },
+            { time: 101.20, text: "I said, \"I would never fall unless it's you 💎 I fall into 💖\"" },
+            { time: 108.36, text: "I was lost 🗺️ within the darkness 🌃, but then I found 🔍 her" },
+            { time: 115.03, text: "I found 🌟 you 💏" },
             { time: 121.54, text: "" },
             { time: 136.96, text: "I would never fall in love 💘 again until I found 🎯 her" },
-            { time: 143.93, text: "I said, \"I would never fall unless it's you ✨ I fall into\"" },
-            { time: 150.95, text: "I was lost 🧭 within the darkness 🌌, but then I found 🔍 her" },
+            { time: 143.93, text: "I said, \"I would never fall unless it's you 🫵 I fall into ✨\"" },
+            { time: 150.95, text: "I was lost 🧭 within the darkness 🌌, but then I found 🎯 her" },
             { time: 157.95, text: "I found 💖 you 🌹" },
-            { time: 162.78, text: "Heaven ☁️✨" }
+            { time: 162.78, text: "Heaven ☁️👼✨" }
         ];
 
         let currentLyricIndex = -1;
         const audio = document.getElementById('bg-music');
-        let loveCount = 0; let youCount = 0;
 
-        // --- SPOTLIGHT LYRICS SYSTEM ---
         function showLyric(text) {
             const wrapper = document.getElementById('lyric-wrapper');
             const aura = document.getElementById('lyric-aura');
-            
-            // Handle previous line
             const existingLine = wrapper.querySelector('.current-line');
             if (existingLine) {
                 existingLine.classList.remove('current-line');
                 existingLine.classList.add('old-line');
                 setTimeout(() => existingLine.remove(), 800);
             }
+            if (!text) { anime({ targets: aura, opacity: 0, duration: 500 }); return; }
 
-            if (!text) {
-                anime({ targets: aura, opacity: 0, duration: 500 });
-                return;
-            }
-
-            // Aura color shift
             const auraColors = ['rgba(255, 77, 109, 0.4)', 'rgba(0, 212, 255, 0.3)', 'rgba(255, 255, 255, 0.2)'];
             aura.style.background = `radial-gradient(circle, ${auraColors[Math.floor(Math.random()*auraColors.length)]} 0%, transparent 70%)`;
             anime({ targets: aura, opacity: [0, 0.5], scale: [0.8, 1], duration: 1200, easing: 'easeOutQuad' });
@@ -576,15 +479,19 @@
             const lineEl = document.createElement('div');
             lineEl.className = 'lyric-text current-line';
             
-            const words = text.split(' ');
-            words.forEach((word) => {
+            text.split(' ').forEach((word) => {
                 const wordSpan = document.createElement('span');
                 wordSpan.className = 'lyric-word';
-                
                 const cleanWord = word.toLowerCase().replace(/[",-]/g, '');
-                if (cleanWord.includes('love')) wordSpan.classList.add('love-shade');
-                else if (cleanWord.includes('you')) wordSpan.classList.add('you-shade');
+                
+                // --- DYNAMIC WORD COLORS ---
+                if (cleanWord.includes('georgia')) wordSpan.classList.add('georgia-shade');
+                else if (cleanWord.includes('love')) wordSpan.classList.add('love-shade');
+                else if (cleanWord.includes('you') || cleanWord.includes('your')) wordSpan.classList.add('you-shade');
+                else if (cleanWord.includes('found') || cleanWord.includes('caught')) wordSpan.classList.add('found-shade');
+                else if (cleanWord.includes('darkness') || cleanWord.includes('lost')) wordSpan.classList.add('dark-shade');
                 else if (cleanWord.includes('heaven')) wordSpan.classList.add('heaven-shade');
+                else if (cleanWord.includes('romeo') || cleanWord.includes('juliet')) wordSpan.classList.add('story-shade');
 
                 Array.from(word).forEach((char) => {
                     const charSpan = document.createElement('span');
@@ -594,35 +501,26 @@
                 });
                 lineEl.appendChild(wordSpan);
             });
-
             wrapper.appendChild(lineEl);
 
             const allChars = lineEl.querySelectorAll('.lyric-char');
             const allWords = lineEl.querySelectorAll('.lyric-word');
 
-            // Elegant reveal with Word Focus
-            anime.timeline()
-            .add({
-                targets: allChars,
-                opacity: [0, 1],
-                translateY: [15, 0],
+            anime.timeline().add({
+                targets: allChars, opacity: [0, 1], translateY: [15, 0],
                 delay: (el, i) => {
-                    let baseDelay = i * 150; 
-                    if (text.startsWith("Georgia") && i > 6) return baseDelay + 800; // 0.8s Pause
-                    return baseDelay;
+                    let d = i * 150; 
+                    if (text.startsWith("Georgia") && i > 6) d += 800;
+                    return d;
                 },
-                easing: 'easeOutQuad',
-                duration: 1000,
-                // Spotlight logic: Highlight word as its characters appear
+                easing: 'easeOutQuad', duration: 1000,
                 changeBegin: () => {
                     allWords.forEach((w, idx) => {
-                        // Calculate approximate time when this word starts based on char count
                         let wordStartIndex = 0;
-                        for(let k=0; k<idx; k++) wordStartIndex += words[k].length + 1;
-                        
+                        const wordsArr = text.split(' ');
+                        for(let k=0; k<idx; k++) wordStartIndex += wordsArr[k].length + 1;
                         let wordDelay = wordStartIndex * 150;
                         if (text.startsWith("Georgia") && idx > 0) wordDelay += 800;
-
                         setTimeout(() => {
                             allWords.forEach(sw => sw.classList.remove('focused-word'));
                             w.classList.add('focused-word');
@@ -633,35 +531,40 @@
         }
 
         // Tap Sparkle Logic
-        document.getElementById('lyrics-container').addEventListener('click', (e) => {
-            for(let i=0; i<10; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                s.style.width = (Math.random() * 6 + 2) + 'px';
-                s.style.height = s.style.width;
-                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
-                document.body.appendChild(s);
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 120 + 40;
-                anime({
-                    targets: s,
-                    translateX: Math.cos(angle) * dist,
-                    translateY: Math.sin(angle) * dist,
-                    opacity: [1, 0], scale: [1, 0],
-                    duration: 1200, easing: 'easeOutExpo', complete: () => s.remove()
-                });
+        document.body.addEventListener('click', (e) => {
+            if(document.getElementById('lyrics-container').style.display === 'block') {
+                for(let i=0; i<10; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'sparkle';
+                    s.style.width = (Math.random() * 6 + 2) + 'px';
+                    s.style.height = s.style.width;
+                    s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                    document.body.appendChild(s);
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * 120 + 40;
+                    anime({
+                        targets: s, translateX: Math.cos(angle) * dist, translateY: Math.sin(angle) * dist,
+                        opacity: [1, 0], scale: [1, 0], duration: 1200, easing: 'easeOutExpo', complete: () => s.remove()
+                    });
+                }
             }
         });
 
-        // --- AUTH & LOAD LOGIC ---
-        const magicBtn = document.getElementById('magic-btn');
-        const loader = document.getElementById('btn-loader');
+        // --- FLORAL REVEAL LOGIC ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.floral-container').forEach(v => observer.observe(v));
 
+        // --- ENTRANCE LOGIC ---
+        const magicBtn = document.getElementById('magic-btn');
         magicBtn.addEventListener('click', () => {
             audio.play();
             magicBtn.style.display = 'none';
             document.getElementById('magic-hint').innerText = "Tuning into our frequency...";
-            loader.style.display = 'inline-block';
+            document.getElementById('btn-loader').style.display = 'inline-block';
             audio.onplaying = () => {
                 document.getElementById('landing-page').style.opacity = '0';
                 setTimeout(() => {
@@ -699,21 +602,9 @@
         }
         window.addEventListener('scroll', reveal);
 
-        // --- REASONS DATA ---
-        const reasons = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your effection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching your videos", "Our jokes", "How you make me happy instantly", "Your love for someone like me", "I never get bored of you", "How close we are now", "The thought of you", "The smell of you", "The selfishness", "Your strength", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable nature"];
-        const grid = document.getElementById('reasons-grid');
-        reasons.forEach((r, i) => {
-            const div = document.createElement('div');
-            div.className = 'card-glass p-6 text-center text-lg font-medium reveal border-pink-500/20 hover:border-pink-500/60 transition-all hover:-translate-y-2';
-            div.innerHTML = `<span class="block text-pink-500 text-xs font-bold mb-2 tracking-widest uppercase">Reason #${i+1}</span>${r}`;
-            grid.appendChild(div);
-        });
-
-        // No Button Magic
+        // --- NO BUTTON MASHTI ---
         const noBtn = document.getElementById('no-btn');
-        const personalKeywords = [
-            "Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Romeo wait! 🥺", "Only One ho meri! ❤️", "3 hours ki walk... 👣", "42 reasons padh lo! 📜", "Pretty boy ko chhodogi? 🥰", "Juliet mat bano! 🌹", "Baccha ruk jao! 🥺", "Honey no! 🍯", "Wifeyyy please? 💍", "Masterpiece ho tum! 🎨", "Sapne bhool gayi? 🌌", "Haath naapa tha! 📏"
-        ];
+        const personalKeywords = ["Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Romeo wait! 🥺", "Only One ho meri! ❤️", "3 hours ki walk... 👣", "42 reasons padh lo! 📜", "Pretty boy ko chhodogi? 🥰", "Juliet mat bano! 🌹", "Baccha ruk jao! 🥺", "Honey no! 🍯", "Wifeyyy please? 💍", "Masterpiece ho tum! 🎨", "Sapne bhool gayi? 🌌", "Haath naapa tha! 📏"];
 
         function handleNoMasti(e) {
             if (e.type === 'touchstart') e.preventDefault();
@@ -725,13 +616,18 @@
         noBtn.addEventListener('mouseover', handleNoMasti);
         noBtn.addEventListener('touchstart', handleNoMasti);
 
-        // YES Button
+        // --- YES BUTTON + VIBRATION + HIDE BUTTONS ---
         document.getElementById('yes-btn').addEventListener('click', () => {
-            if (navigator.vibrate) navigator.vibrate(100); // Mobile Vibration
+            if (navigator.vibrate) navigator.vibrate(100);
+            document.getElementById('btn-container').style.display = 'none';
+            document.getElementById('proposal-question').style.display = 'none';
             const msg = document.getElementById('response-msg');
+            msg.classList.remove('hidden');
             msg.innerText = "I KNEW IT! ❤️ Forever & Always! I LOVE YOU BHUMIKA!";
-            msg.style.opacity = "1";
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            setTimeout(() => {
+                msg.style.opacity = "1";
+                confetti({ particleCount: 400, spread: 150, origin: { y: 0.6 } });
+            }, 50);
         });
 
         function createHeart() {
@@ -750,3 +646,4 @@
     </script>
 </body>
 </html>
+
