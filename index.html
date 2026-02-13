@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Message for Bhumika!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0d0002;
+            overflow-x: hidden;
+            color: white;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a0005, #4a000e, #2d0008, #1a0005);
+            background-size: 400% 400%;
+            animation: gradient-shift 20s infinite alternate;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1, h2, h3 { font-family: 'Great Vibes', cursive; }
+        
+        .romantic-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: #ffeef2;
+        }
+
+        /* --- STYLED LYRICS CONTAINER --- */
+        #lyrics-container {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95%;
+            max-width: 1000px;
+            text-align: center;
+            z-index: 1000;
+            pointer-events: none;
+            display: none;
+        }
+
+        #lyric-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 77, 109, 0.25) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .lyric-text {
+            font-family: 'Great Vibes', cursive, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+            font-size: 1.6rem;
+            color: #ffffff;
+            line-height: 1.6;
+            display: inline-block;
+            position: relative;
+        }
+
+        .lyric-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        /* Varied Keyword Colors */
+        .love-shade-1 { color: #ff4d6d; text-shadow: 0 0 10px rgba(255, 77, 109, 0.6); }
+        .love-shade-2 { color: #c9184a; text-shadow: 0 0 10px rgba(201, 24, 74, 0.6); }
+        .love-shade-3 { color: #ff758f; text-shadow: 0 0 10px rgba(255, 117, 143, 0.6); }
+
+        .you-shade-1 { color: #00d4ff; text-shadow: 0 0 10px rgba(0, 212, 255, 0.6); }
+        .you-shade-2 { color: #48cae4; text-shadow: 0 0 10px rgba(72, 202, 228, 0.6); }
+        .you-shade-3 { color: #ade8f4; text-shadow: 0 0 10px rgba(173, 232, 244, 0.6); }
+
+        .dark-shade-1 { color: #4a4e69; }
+        .dark-shade-2 { color: #22223b; }
+
+        .heaven-shade { color: #fdfdfd; text-shadow: 0 0 20px #fff; }
+
+        @media (min-width: 768px) { .lyric-text { font-size: 2.8rem; } }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 77, 109, 0.3);
+            animation: float 15s infinite linear;
+            z-index: 0;
+            pointer-events: none;
+            font-family: serif;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+        
+        .card-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .image-frame {
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+            max-width: 100%;
+        }
+        .image-frame:hover { transform: rotate(0deg) scale(1.02); }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #ff4d6d, #ff4d6d, transparent);
+            transform: translateX(-50%);
+            display: none;
+        }
+        @media (min-width: 768px) { .timeline-line { display: block; } }
+
+        /* Chat Bubbles Styling */
+        .chat-bubble {
+            max-width: 85%;
+            padding: 1rem 1.5rem;
+            border-radius: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            font-size: 1.2rem;
+        }
+        .chat-left { background: rgba(255, 255, 255, 0.1); align-self: flex-start; border-bottom-left-radius: 0; }
+        .chat-right { background: #c9184a; align-self: flex-end; border-bottom-right-radius: 0; }
+
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d0002; }
+        ::-webkit-scrollbar-thumb { background: #ff4d6d; border-radius: 10px; }
+
+        .landing-screen {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #FFF;
+            border-bottom-color: #ff4d6d;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin-bottom: 20px;
+            display: none;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #no-btn {
+            position: relative;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+            min-width: 140px;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+
+    <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" src="https://res.cloudinary.com/din9cqfkt/video/upload/v1771009121/Stephen_Sanchez_Until_I_Found_You_Official_Video_nurf5u.mp3" preload="auto"></audio>
+
+    <!-- Synced Lyrics Container -->
+    <div id="lyrics-container">
+        <div id="lyric-aura"></div>
+        <div id="current-lyric" class="lyric-text"></div>
+    </div>
+
+    <!-- Landing Gateway -->
+    <div id="landing-page" class="landing-screen p-6 text-center">
+        <div class="reveal active mb-12" id="landing-intro">
+            <h1 class="text-6xl md:text-[8rem] text-pink-500 mb-6 font-cursive drop-shadow-lg">For Bhumika ❤️</h1>
+            <p class="romantic-text text-pink-200 text-xl md:text-2xl">Ek pyaara sa tohfa, sirf tumhare liye...</p>
+        </div>
+        
+        <div class="w-full max-w-sm card-glass p-12 border-2 border-pink-500/20 shadow-2xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
+            <span id="btn-loader" class="loader"></span>
+            <button id="magic-btn" class="w-full py-8 bg-pink-600 rounded-full font-bold text-3xl hover:bg-pink-500 transition-all transform hover:scale-110 active:scale-95 shadow-2xl shadow-pink-500/40 relative z-10">
+                Open Magic ✨
+            </button>
+            <p id="magic-hint" class="mt-8 text-pink-300 font-light tracking-widest text-xs uppercase opacity-60 italic">Gaana load hone par site khulegi</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="relative z-10 hidden opacity-0 transition-opacity duration-1000">
+        
+        <!-- Hero Section -->
+        <header class="h-screen flex flex-col items-center justify-center text-center px-4">
+            <div class="reveal">
+                <h1 class="text-7xl md:text-[10rem] text-pink-500 mb-6 drop-shadow-2xl">Bhumika</h1>
+                <p class="text-xl md:text-3xl tracking-[0.4em] uppercase text-pink-200 font-light">My Only One, My Everything</p>
+                <div class="mt-20 flex flex-col items-center">
+                    <p class="romantic-text animate-pulse">Bas scroll karte raho...</p>
+                    <div class="w-px h-20 bg-gradient-to-b from-pink-500 to-transparent mt-4"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- (1) Masterpiece Section -->
+        <section class="bg-pink-900/5">
+            <div class="card-glass p-10 md:p-24 max-w-4xl reveal text-center mx-4">
+                <h2 class="text-5xl text-pink-300 mb-10">You are My Masterpiece... 🎨</h2>
+                <div class="romantic-text text-2xl md:text-4xl leading-relaxed type-writer" data-text="You are not just pretty, you are the masterpiece my heart found. You are not just good, you are the reason good even exists in my life. ❤️">
+                </div>
+            </div>
+        </section>
+
+        <!-- (2) Letter Section -->
+        <section>
+            <div class="card-glass p-8 md:p-20 max-w-5xl reveal mx-auto border border-pink-500/10">
+                <h2 class="text-5xl text-pink-400 mb-10">Babyy... 🥺</h2>
+                <div class="romantic-text text-2xl md:text-4xl italic leading-relaxed type-writer" data-text="If you could ever see yourself through my eyes, you'd never doubt your worth for even a second. You call yourself not enough, but to me, you're not just enough — you're the definition of everything I ever wanted.">
+                </div>
+                <div class="h-1 w-24 bg-pink-600 my-10"></div>
+                <div class="romantic-text text-xl md:text-2xl leading-relaxed type-writer" data-text="The world could offer me a thousand faces, a thousand choices, and I would still choose you every single time, without any hesitation.">
+                </div>
+            </div>
+        </section>
+
+        <!-- (3) Thinking Section -->
+        <section class="bg-black/40">
+            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-left mx-4 border-l-8 border-pink-600">
+                <h2 class="text-4xl text-pink-400 mb-8 italic">Thinking About You...</h2>
+                <div class="romantic-text text-2xl md:text-3xl leading-relaxed type-writer" data-text="I just wanted to let u know... that I love you so much and you're always on my mind thinking about u and how pretty u are 24/7. I struggle to sleep thinking about u a lot... knowing that your the only pretty boy I want and need in my life..!!">
+                </div>
+            </div>
+        </section>
+
+        <!-- (4) Hindi Poetry Section -->
+        <section class="bg-black/20">
+            <div class="max-w-4xl text-center reveal space-y-12 px-4">
+                <h2 class="text-6xl text-pink-300">Tumhari Aankhein... 🌷</h2>
+                <div class="space-y-8 text-xl md:text-3xl font-light text-pink-50 leading-loose type-writer" data-text="मैंने तुम्हारी आँखों में उन ख़वाबों को चलते हुए देखा है... जलते दिल की सस्कियो पर... ✨ उन आँसुओ को गिरते हुए देखा है... ❤️‍🩹 मैंने तुम्हारी आँखों में खाली मुक़द्दर को भी संजते हुए देखा है... हंसते हुए ख्यालों में अपने हमसफर को गले लगते हुए देखा है... मैंने तुम्हारी आँखों में सब कुछ पाते हुए देखा है... ढाई किलो की खुशियों को सबमे बांटते हुए देखा है...">
+                </div>
+                <p class="text-pink-400 font-bold mt-10 text-3xl md:text-5xl reveal">मैंने तुम्हारी आँखों में तुमसा बेहतर कुछ नहीं देखा है।</p>
+            </div>
+        </section>
+
+        <!-- (5) Hug Section -->
+        <section>
+            <div class="card-glass p-10 md:p-20 max-w-4xl reveal text-center mx-4">
+                <div class="text-6xl mb-8">🫂❤️</div>
+                <div class="romantic-text text-2xl md:text-4xl leading-relaxed type-writer" data-text="I want to be hugging u so tight any single time I get the chance... u always put a smile on my face no matter what. If your ever sad or mad I will always be there for u.">
+                </div>
+            </div>
+        </section>
+
+        <!-- (6) Chat Memories Section (RESTORED) -->
+        <section class="flex flex-col items-center">
+            <h2 class="text-5xl text-pink-400 mb-20 text-center">Those Late Night Texts...</h2>
+            <div class="w-full max-w-2xl flex flex-col space-y-6 px-6">
+                <div class="chat-bubble chat-left reveal">"I love you"</div>
+                <div class="chat-bubble chat-right reveal">"I love you when I wake up"</div>
+                <div class="chat-bubble chat-left reveal">"I love you when I go to bed"</div>
+                <div class="chat-bubble chat-right reveal">"I love you in the middle of the day"</div>
+                <div class="chat-bubble chat-left reveal">"I love you cause of your smile"</div>
+                <div class="chat-bubble chat-right reveal">"I love you cause of your pretty face"</div>
+                <div class="chat-bubble chat-left reveal text-pink-400 font-bold">"I love you to the moon and back"</div>
+                <div class="chat-bubble chat-right reveal bg-pink-700">"And u will be forever mine and I'll forever be yours"</div>
+            </div>
+        </section>
+
+        <!-- (7) Biggest Part Section -->
+        <section class="bg-pink-950/10">
+            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-center mx-4 border-t-8 border-pink-500">
+                <div class="romantic-text text-3xl md:text-5xl font-bold mb-10 text-pink-300">"U are one of my biggest part of my whole life..."</div>
+                <div class="romantic-text text-2xl md:text-3xl italic leading-relaxed type-writer" data-text="I want to be with u always forever till we die... I appreciate having u in my life!!! For helping me through the bad times and being there to help me celebrate the good times.">
+                </div>
+                <div class="mt-12 flex justify-center gap-4 text-4xl">💙 🌍 ♾️</div>
+            </div>
+        </section>
+
+        <!-- (8) Daily Rhythm Section -->
+        <section class="bg-black/60">
+            <div class="max-w-4xl reveal space-y-16 px-4 text-center">
+                <h2 class="text-5xl text-pink-400 font-cursive">My Whole Day...</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Wake Up</h3><p>Sabse pehle khyal tumhara.</p></div>
+                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Noon</h3><p>Baaton ka intezar.</p></div>
+                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Night</h3><p>Sapne humare sath ke.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- (9) Story Timeline Section -->
+        <section class="relative">
+            <div class="timeline-line"></div>
+            <div class="w-full max-w-6xl mx-auto px-6 py-20">
+                <h2 class="text-6xl text-pink-500 text-center mb-32">Our Story So Far</h2>
+                <div class="space-y-40">
+                    <div class="flex flex-col md:flex-row items-center reveal gap-10">
+                        <div class="md:w-1/2 text-center md:text-right">
+                            <h3 class="text-5xl text-pink-400 mb-4">Pehli Mulakat</h3>
+                            <p class="romantic-text">Garden mein jab tum pehli baar aayi thi... humne haath naapa tha, yaad hai?</p>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm">
+                                <img src="https://i.postimg.cc/QthKbwtN/529334275-695857513476418-1126552635426847650-n.jpg" class="w-full h-auto" alt="Pehli Mulakat">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row-reverse items-center reveal gap-10">
+                        <div class="md:w-1/2 text-center md:text-left">
+                            <h3 class="text-5xl text-pink-400 mb-4">The Bouquet Moment</h3>
+                            <p class="romantic-text">December mein jab tumne bouquet diya... us raat main ro diya tha khushi se. Pata chala pyaar kya hota hai.</p>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm" style="transform: rotate(2deg)">
+                                <img src="https://i.postimg.cc/HxXZgw5b/528056378-771947991886302-8605683557653560640-n.jpg" class="w-full h-auto" alt="Bouquet">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center reveal gap-10">
+                        <div class="md:w-1/2 text-center md:text-right">
+                            <h3 class="text-5xl text-pink-400 mb-4">3 Ghante Ki Walk</h3>
+                            <p class="romantic-text">Morning walk ke wo 3 ghante... haath pakad kar aisa laga ki kabhi nahi chhodna hai.</p>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm">
+                                <img src="https://i.postimg.cc/nhKqp3wF/528075826-615554604658640-8336941647408441677-n.jpg" class="w-full h-auto" alt="Morning Walk">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- (10) No Replacement Section -->
+        <section class="bg-pink-900/10">
+            <div class="card-glass p-12 md:p-24 max-w-4xl reveal text-center mx-4 border-b-4 border-pink-500/30">
+                <div class="romantic-text text-3xl md:text-5xl leading-relaxed type-writer font-bold" data-text="No matter what your mind tells you, I want you to know this truth... you are my only one, my forever and NO ONE could ever replace you.">
+                </div>
+                <p class="mt-8 text-pink-400 text-2xl italic">My only babeee, my wifeyyy, my honeyyy... ❤️</p>
+            </div>
+        </section>
+
+        <!-- (11) Gallery Section -->
+        <section class="flex flex-col items-center">
+            <h2 class="text-6xl text-pink-500 mb-16">Moments Captured 📸</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+                <div class="reveal"><img src="https://iili.io/qHX3Npt.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 1"></div>
+                <div class="reveal"><img src="https://iili.io/qHX3wvI.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 2"></div>
+                <div class="reveal"><img src="https://iili.io/qHX3jYN.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 3"></div>
+                <div class="reveal"><img src="https://iili.io/qHX3h2p.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 4"></div>
+                <div class="reveal"><img src="https://iili.io/qHX3SCG.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 5"></div>
+                <div class="reveal"><img src="https://iili.io/qHX3g44.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 6"></div>
+                <div class="reveal"><img src="https://iili.io/qHX343l.md.jpg" class="rounded-xl shadow-xl border-4 border-white/10" alt="Bhumika 7"></div>
+            </div>
+        </section>
+
+        <!-- (12) Gratitude Section -->
+        <section>
+            <div class="card-glass p-12 md:p-20 max-w-4xl reveal text-center mx-4 border-r-8 border-pink-500">
+                <div class="romantic-text text-2xl md:text-4xl italic type-writer" data-text="There aren't enough words in the dictionary for me to tell u how glad I am to have u in my life. I am so lucky to have u by my side. I am eternally grateful to have your love.">
+                </div>
+            </div>
+        </section>
+
+        <!-- (13) Strength Section -->
+        <section class="bg-black/30">
+            <div class="card-glass p-10 md:p-20 max-w-3xl reveal text-center mx-4">
+                <h2 class="text-4xl text-pink-300 mb-8">My Strongest Girl... 💪❤️</h2>
+                <div class="romantic-text text-xl md:text-3xl leading-relaxed type-writer" data-text="Your strength is what I admire the most. Your bravery, your intelligence, your passion... you are respectable in every way.">
+                </div>
+            </div>
+        </section>
+
+        <!-- (14) 42 Reasons Section -->
+        <section class="flex flex-col items-center">
+            <h2 class="text-6xl text-pink-500 text-center mb-20">42 Reasons Why I Love You</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-6" id="reasons-grid"></div>
+        </section>
+
+        <!-- (15) Truth Reveal Section -->
+        <section class="bg-pink-900/20">
+            <div class="card-glass p-12 md:p-32 reveal text-center mx-4 relative overflow-hidden">
+                <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
+                <div class="romantic-text text-3xl md:text-6xl font-cursive text-pink-200 type-writer" data-text="Babyyy, know this truth... you are my ONLY ONE. Forever.">
+                </div>
+            </div>
+        </section>
+
+        <!-- (16) Foolmati Special Section -->
+        <section class="bg-pink-600/5">
+            <div class="text-center reveal p-10 md:p-20 border-4 border-dashed border-pink-500/30 rounded-3xl mx-4 card-glass">
+                <h3 class="text-6xl mb-8 font-cursive">My Dear Foolmati! 🤡❤️</h3>
+                <div class="romantic-text text-2xl md:text-4xl italic type-writer" data-text="Babyy - if you could ever see yourself through my eyes, you'd never doubt your worth for even a second~">
+                </div>
+                <div class="flex justify-center gap-6 mt-12 text-5xl">
+                    <span class="animate-bounce">🥺</span> <span class="animate-pulse">❤️</span> <span class="animate-bounce" style="animation-delay: 0.2s">🥰</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- (17) Infinite Love Section -->
+        <section class="h-[60vh] flex items-center justify-center">
+            <div class="text-center reveal scale-125">
+                <div class="text-8xl mb-10">♾️</div>
+                <p class="romantic-text text-4xl text-pink-100">Our love has no end.</p>
+            </div>
+        </section>
+
+        <!-- (18) Final Proposal Section -->
+        <section class="flex flex-col items-center justify-center overflow-hidden">
+            <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-500 text-center mx-4">
+                <h2 class="text-6xl md:text-[8rem] text-pink-500 mb-10 font-cursive">Bhumika...</h2>
+                <h3 class="text-4xl md:text-5xl text-white mb-20 font-light leading-relaxed">Will you stay with me forever?</h3>
+                <div class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[150px]">
+                    <button id="yes-btn" class="w-48 py-6 bg-pink-600 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-500/30">YES ❤️</button>
+                    <button id="no-btn" class="w-48 py-6 bg-gray-700/50 rounded-full font-bold text-2xl z-50">No</button>
+                </div>
+                <p id="response-msg" class="mt-12 text-3xl text-pink-400 font-bold opacity-0 transition-opacity duration-1000"></p>
+            </div>
+        </section>
+
+        <footer class="py-20 text-center opacity-30">
+            <p class="cursive text-3xl">Forever Yours, Bhumika. 2026.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- REAL TIMESTAMPS WITH DIVERSE EMOJIS ---
+        const lyrics = [
+            { time: 0, text: "" },
+            { time: 10.04, text: "Georgia 🌹, wrap me up in all your ✨-" },
+            { time: 16.71, text: "I want you 💫 in my arms 🫂" },
+            { time: 22.27, text: "Oh, let me hold 🧸 you 🌟" },
+            { time: 27.22, text: "I'll never let you 💎 go again like I did" },
+            { time: 33.33, text: "Oh, I used to say" },
+            { time: 37.04, text: "\"I would never fall in love ❤️ again until I found 📍 her\"" },
+            { time: 44.16, text: "I said, \"I would never fall unless it's you 💖 I fall into\"" },
+            { time: 51.37, text: "I was lost 🧭 within the darkness 🌃, but then I found 🎯 her" },
+            { time: 58.19, text: "I found ✨ you 💘" },
+            { time: 64.53, text: "" },
+            { time: 67.48, text: "Georgia 🌸, pulled me in" },
+            { time: 72.12, text: "I asked to love 💓 her once again" },
+            { time: 79.22, text: "You ✨ fell, I caught you 🫂" },
+            { time: 84.48, text: "I'll never let you 💫 go again like I did" },
+            { time: 90.48, text: "Oh, I used to say" },
+            { time: 94.00, text: "\"I would never fall in love 🥰 again until I found 📍 her\"" },
+            { time: 101.20, text: "I said, \"I would never fall unless it's you 💎 I fall into\"" },
+            { time: 108.36, text: "I was lost 🗺️ within the darkness 🌑, but then I found 🔍 her" },
+            { time: 115.03, text: "I found 🌟 you 💍" },
+            { time: 121.54, text: "" },
+            { time: 136.96, text: "I would never fall in love 💘 again until I found 🎯 her" },
+            { time: 143.93, text: "I said, \"I would never fall unless it's you ✨ I fall into\"" },
+            { time: 150.95, text: "I was lost 🧭 within the darkness 🌌, but then I found 🔍 her" },
+            { time: 157.95, text: "I found 💖 you 🌹" },
+            { time: 162.78, text: "Heaven ☁️✨" }
+        ];
+
+        let currentLyricIndex = -1;
+        const audio = document.getElementById('bg-music');
+        let loveCount = 0;
+        let youCount = 0;
+        let darkCount = 0;
+
+        function showLyric(text) {
+            const lyricContainer = document.getElementById('current-lyric');
+            const aura = document.getElementById('lyric-aura');
+            lyricContainer.innerHTML = '';
+            if (!text) { anime({ targets: aura, opacity: 0, duration: 500 }); return; }
+
+            anime({ targets: aura, opacity: [0, 0.45], scale: [0.7, 1], duration: 1200, easing: 'easeOutQuad' });
+
+            const words = text.split(' ');
+            words.forEach((word) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.marginRight = '0.35em';
+                const cleanWord = word.toLowerCase().replace(/[",-]/g, '');
+                
+                if (cleanWord.includes('love')) {
+                    const shades = ['love-shade-1', 'love-shade-2', 'love-shade-3'];
+                    wordSpan.className = shades[loveCount % shades.length];
+                    loveCount++;
+                } else if (cleanWord === 'you' || cleanWord === 'your' || cleanWord === 'you-') {
+                    const shades = ['you-shade-1', 'you-shade-2', 'you-shade-3'];
+                    wordSpan.className = shades[youCount % shades.length];
+                    youCount++;
+                } else if (cleanWord.includes('darkness')) {
+                    const shades = ['dark-shade-1', 'dark-shade-2'];
+                    wordSpan.className = shades[darkCount % shades.length];
+                    darkCount++;
+                } else if (cleanWord.includes('heaven')) {
+                    wordSpan.className = 'heaven-shade';
+                }
+
+                const chars = Array.from(word);
+                chars.forEach((char) => {
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    charSpan.className = 'lyric-char';
+                    wordSpan.appendChild(charSpan);
+                });
+                lyricContainer.appendChild(wordSpan);
+            });
+
+            const allChars = lyricContainer.querySelectorAll('.lyric-char');
+            anime({
+                targets: allChars,
+                opacity: [0, 1],
+                translateY: [10, 0],
+                delay: (el, i) => {
+                    let baseDelay = i * 150; 
+                    if (text.startsWith("Georgia") && i > 6) { return baseDelay + 800; }
+                    return baseDelay;
+                },
+                easing: 'easeOutQuad',
+                duration: 1100
+            });
+        }
+
+        const magicBtn = document.getElementById('magic-btn');
+        const loader = document.getElementById('btn-loader');
+
+        magicBtn.addEventListener('click', () => {
+            audio.play();
+            magicBtn.style.display = 'none';
+            document.getElementById('magic-hint').innerText = "Tuning into our frequency...";
+            loader.style.display = 'inline-block';
+            audio.onplaying = () => {
+                document.getElementById('landing-page').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('landing-page').style.display = 'none';
+                    document.getElementById('main-content').classList.remove('hidden');
+                    document.getElementById('lyrics-container').style.display = 'block'; 
+                    setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; reveal(); }, 50);
+                }, 1000);
+            };
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const index = lyrics.findLastIndex(l => l.time <= audio.currentTime);
+            if (index !== -1 && index !== currentLyricIndex) {
+                currentLyricIndex = index;
+                showLyric(lyrics[index].text);
+            }
+        });
+
+        function typeWriter(element) {
+            const text = element.getAttribute('data-text');
+            element.innerHTML = '';
+            let i = 0;
+            function type() { if (i < text.length) { element.innerHTML += text.charAt(i); i++; setTimeout(type, 70); } }
+            type();
+        }
+
+        const startedTypewriters = new Set();
+        function reveal() {
+            document.querySelectorAll('.reveal').forEach(r => {
+                if (r.getBoundingClientRect().top < window.innerHeight - 100) {
+                    r.classList.add('active');
+                    r.querySelectorAll('.type-writer').forEach(t => { if (!startedTypewriters.has(t)) { startedTypewriters.add(t); typeWriter(t); } });
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+
+        // --- REASONS DATA ---
+        const reasons = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your effection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching your videos", "Our jokes", "How you make me happy instantly", "Your love for someone like me", "I never get bored of you", "How close we are now", "The thought of you", "The smell of you", "The selfishness", "Your strength", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable nature"];
+        const grid = document.getElementById('reasons-grid');
+        reasons.forEach((r, i) => {
+            const div = document.createElement('div');
+            div.className = 'card-glass p-6 text-center text-lg font-medium reveal border-pink-500/20 hover:border-pink-500/60 transition-all hover:-translate-y-2';
+            div.innerHTML = `<span class="block text-pink-500 text-xs font-bold mb-2 tracking-widest uppercase">Reason #${i+1}</span>${r}`;
+            grid.appendChild(div);
+        });
+
+        // --- UPDATED NO BUTTON LOGIC WITH PERSONAL KEYWORDS ---
+        const noBtn = document.getElementById('no-btn');
+        const personalKeywords = [
+            "Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Romeo wait! 🥺", "Only One ho meri! ❤️", "3 hours ki walk... 👣", "42 reasons padh lo! 📜", "Pretty boy ko chhodogi? 🥰", "Juliet mat bano! 🌹", "Baccha ruk jao! 🥺", "Honey no! 🍯", "Wifeyyy please? 💍", "Masterpiece ho tum! 🎨", "Sapne bhool gayi? 🌌", "Haath naapa tha! 📏"
+        ];
+
+        noBtn.addEventListener('mouseover', function() {
+            const x = Math.random() * (window.innerWidth - 300) - (window.innerWidth / 2 - 150);
+            const y = Math.random() * (window.innerHeight - 300) - (window.innerHeight / 2 - 150);
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+            noBtn.innerText = personalKeywords[Math.floor(Math.random() * personalKeywords.length)];
+        });
+
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            const msg = document.getElementById('response-msg');
+            msg.innerText = "I KNEW IT! ❤️ Forever & Always! I LOVE YOU BHUMIKA!";
+            msg.style.opacity = "1";
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ffffff', '#ffb3c1'] });
+        });
+
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            heart.style.opacity = Math.random() * 0.4 + 0.1;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 12000);
+        }
+        setInterval(createHeart, 450);
+    </script>
+</body>
+</html>
