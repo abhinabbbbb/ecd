@@ -191,9 +191,10 @@
 
         #no-btn {
             position: relative;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
             min-width: 140px;
+            touch-action: none; /* Mobile touch ke liye jaroori hai */
         }
     </style>
 </head>
@@ -291,7 +292,7 @@
             </div>
         </section>
 
-        <!-- (6) Chat Memories Section (RESTORED) -->
+        <!-- (6) Chat Memories Section -->
         <section class="flex flex-col items-center">
             <h2 class="text-5xl text-pink-400 mb-20 text-center">Those Late Night Texts...</h2>
             <div class="w-full max-w-2xl flex flex-col space-y-6 px-6">
@@ -323,7 +324,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Wake Up</h3><p>Sabse pehle khyal tumhara.</p></div>
                     <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Noon</h3><p>Baaton ka intezar.</p></div>
-                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Night</h3><p>Sapne humare sath ke.</p></div>
+                    <div class="card-glass p-8 reveal"><h3 class="text-pink-300 mb-4">Raat</h3><p>Sapne humare sath ke.</p></div>
                 </div>
             </div>
         </section>
@@ -337,7 +338,7 @@
                     <div class="flex flex-col md:flex-row items-center reveal gap-10">
                         <div class="md:w-1/2 text-center md:text-right">
                             <h3 class="text-5xl text-pink-400 mb-4">Pehli Mulakat</h3>
-                            <p class="romantic-text">Garden mein jab tum pehli baar aayi thi... humne haath naapa tha, yaad hai?</p>
+                            <p class="romantic-text">Garden mein jab Deepika di ke saath tum pehli baar aayi thi... humne haath naapa tha, yaad hai?</p>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
                             <div class="image-frame bg-gray-800 rounded-lg overflow-hidden max-w-sm">
@@ -613,18 +614,29 @@
             grid.appendChild(div);
         });
 
-        // --- UPDATED NO BUTTON LOGIC WITH PERSONAL KEYWORDS ---
+        // --- UPDATED NO BUTTON LOGIC WITH PERSONAL KEYWORDS & MOBILE TOUCH FIX ---
         const noBtn = document.getElementById('no-btn');
         const personalKeywords = [
             "Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Romeo wait! 🥺", "Only One ho meri! ❤️", "3 hours ki walk... 👣", "42 reasons padh lo! 📜", "Pretty boy ko chhodogi? 🥰", "Juliet mat bano! 🌹", "Baccha ruk jao! 🥺", "Honey no! 🍯", "Wifeyyy please? 💍", "Masterpiece ho tum! 🎨", "Sapne bhool gayi? 🌌", "Haath naapa tha! 📏"
         ];
 
-        noBtn.addEventListener('mouseover', function() {
+        function handleNoMasti(e) {
+            // Mobile par default touch behavior rokne ke liye
+            if (e.type === 'touchstart') e.preventDefault();
+
             const x = Math.random() * (window.innerWidth - 300) - (window.innerWidth / 2 - 150);
             const y = Math.random() * (window.innerHeight - 300) - (window.innerHeight / 2 - 150);
+            
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
-            noBtn.innerText = personalKeywords[Math.floor(Math.random() * personalKeywords.length)];
-        });
+            
+            const randomWord = personalKeywords[Math.floor(Math.random() * personalKeywords.length)];
+            noBtn.innerText = randomWord;
+        }
+
+        // PC ke liye Mouseover
+        noBtn.addEventListener('mouseover', handleNoMasti);
+        // Mobile ke liye Touchstart
+        noBtn.addEventListener('touchstart', handleNoMasti);
 
         document.getElementById('yes-btn').addEventListener('click', () => {
             const msg = document.getElementById('response-msg');
