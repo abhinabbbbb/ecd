@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            background: #2b050d; /* Pehle se thoda light maroon base */
+            background: #3d0814; 
             overflow-x: hidden;
             color: white;
             scroll-behavior: smooth;
@@ -21,10 +21,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- MOOD BACKGROUNDS (Aur thoda light aur colorful banaya hai) --- */
-        .mood-happy { background: radial-gradient(circle at center, #800020 0%, #2b050d 100%); }
-        .mood-emotional { background: radial-gradient(circle at center, #4a148c 0%, #1a052e 100%); }
-        .mood-climax { background: radial-gradient(circle at center, #827717 0%, #2b050d 100%); }
+        /* --- MOOD BACKGROUNDS --- */
+        .mood-happy { background: radial-gradient(circle at center, #9e1b32 0%, #3d0814 100%); }
+        .mood-emotional { background: radial-gradient(circle at center, #6a1b9a 0%, #210535 100%); }
+        .mood-climax { background: radial-gradient(circle at center, #afb42b 0%, #3d0814 100%); }
 
         h1, h2, h3 { font-family: 'Great Vibes', cursive; }
         
@@ -45,7 +45,6 @@
             max-width: 1000px;
             text-align: center;
             z-index: 2000;
-            pointer-events: auto;
             display: none;
         }
 
@@ -54,25 +53,24 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 77, 109, 0.4) 0%, transparent 70%);
+            width: 600px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 100, 130, 0.4) 0%, transparent 70%);
             filter: blur(80px);
             z-index: -1;
-            transition: all 1s ease;
         }
 
         .lyric-line-wrapper {
             position: relative;
-            height: 140px;
+            height: 160px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .lyric-text {
-            font-family: 'Great Vibes', cursive, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-            font-size: 1.8rem;
+            font-family: 'Great Vibes', cursive, sans-serif;
+            font-size: 2.2rem;
             color: rgba(255, 255, 255, 0.45); 
             line-height: 1.4;
             display: inline-block;
@@ -83,19 +81,18 @@
         .lyric-word {
             display: inline-block;
             margin-right: 0.35em;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             position: relative;
-            filter: blur(1.5px);
-            transform: scale(0.95);
-            opacity: 0.4;
-            will-change: color, transform, filter, opacity;
+            filter: blur(1px);
+            opacity: 0.5;
+            will-change: transform, opacity, filter;
         }
 
         .focused-word {
             color: #ffffff !important;
             filter: blur(0px) !important;
             transform: scale(1.15) translateZ(0);
-            text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 77, 109, 0.6);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 77, 109, 0.8);
             z-index: 10;
             opacity: 1 !important;
         }
@@ -106,42 +103,38 @@
             bottom: -5px;
             left: 5%;
             width: 90%;
-            height: 2.5px;
+            height: 3px;
             background: linear-gradient(90deg, transparent, #ff4d6d, transparent);
-            box-shadow: 0 5px 20px #ff4d6d;
             animation: glow-line 1.2s infinite alternate;
         }
 
         @keyframes glow-line {
-            from { opacity: 0.3; transform: scaleX(0.7); }
-            to { opacity: 1; transform: scaleX(1.3); }
+            from { opacity: 0.4; transform: scaleX(0.7); }
+            to { opacity: 1; transform: scaleX(1.4); }
         }
 
         .old-line {
             opacity: 0 !important;
-            transform: translateY(30px) scale(0.9);
-            filter: blur(15px) !important;
+            transform: translateY(30px) scale(0.85);
+            filter: blur(20px) !important;
             transition: all 0.8s ease;
             pointer-events: none;
         }
 
         .lyric-char { display: inline-block; opacity: 0; transform: translateY(10px); }
 
-        .name-shade { color: #ff85a2 !important; } 
+        .name-shade { color: #ffb3c6 !important; } 
         .love-shade { color: #ff4d6d !important; } 
-        .you-shade { color: #00d4ff !important; } 
-        .heaven-shade { color: #ffffff !important; text-shadow: 0 0 35px #fff !important; } 
+        .you-shade { color: #80e5ff !important; } 
 
-        @media (min-width: 768px) { .lyric-text { font-size: 3.5rem; } }
+        @media (min-width: 768px) { .lyric-text { font-size: 3.8rem; } }
 
-        /* --- CINEMATIC 2.0s 3D TILE FLIP --- */
+        /* --- CINEMATIC 2.0s REVEAL --- */
         .reveal {
             opacity: 0;
             transform: perspective(3000px) rotateY(-90deg) rotateX(5deg) translateZ(-150px);
             filter: blur(4px); 
-            transition: transform 2.0s cubic-bezier(0.19, 1, 0.22, 1), 
-                        opacity 1.6s ease, 
-                        filter 2.0s ease;
+            transition: transform 2.0s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.6s ease, filter 2.0s ease;
             will-change: transform, opacity;
             transform-origin: center left;
         }
@@ -155,12 +148,14 @@
         /* --- CHAT BUBBLES --- */
         .chat-bubble { 
             opacity: 0;
-            transform: translateY(40px) scale(0.7);
             will-change: transform, opacity;
-            transition: none !important; 
         }
+        .chat-left { transform: translateX(-60px) scale(0.8); }
+        .chat-right { transform: translateX(60px) scale(0.8); }
 
-        .tilt-card { transform-style: preserve-3d; perspective: 1200px; will-change: transform; }
+        .chat-word { display: inline-block; opacity: 0; transform: translateY(5px); }
+
+        .tilt-card { transform-style: preserve-3d; perspective: 1200px; }
         .silk-word { display: inline-block; opacity: 0; transform: translateY(15px); filter: blur(4px); }
 
         /* --- MAGIC VINES --- */
@@ -180,29 +175,29 @@
         }
         .floral-container.active .image-frame { transform: rotate(0deg); }
 
-        /* --- FLOATING HEARTS (Visibility fixed) --- */
+        /* --- FLOATING HEARTS --- */
         .heart {
             position: absolute;
-            font-size: 1.5rem;
-            color: rgba(255, 77, 109, 0.8); 
-            animation: float-up 12s infinite linear;
-            z-index: 5; 
+            font-size: 1.8rem;
+            color: rgba(255, 133, 162, 0.9); 
+            animation: float-up 10s infinite linear;
+            z-index: 50;
             pointer-events: none;
             user-select: none;
-            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.6));
+            filter: drop-shadow(0 0 15px rgba(255, 77, 109, 0.7));
         }
 
         @keyframes float-up {
             0% { transform: translateY(110vh) translateX(0) rotate(0deg) scale(0.8); opacity: 0; }
-            20% { opacity: 0.9; }
-            80% { opacity: 0.9; }
-            100% { transform: translateY(-10vh) translateX(20px) rotate(360deg) scale(1.5); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(30px) rotate(360deg) scale(1.6); opacity: 0; }
         }
 
         .card-glass {
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12); 
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 2.5rem;
             box-shadow: 0 25px 60px rgba(0,0,0,0.3);
         }
@@ -217,16 +212,15 @@
             line-height: 1.5;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .chat-left { background: rgba(255, 255, 255, 0.15); align-self: flex-start; border-bottom-left-radius: 0; text-align: left; }
-        .chat-right { background: #e01e5a; align-self: flex-end; border-bottom-right-radius: 0; text-align: left; }
+        .chat-left { background: rgba(255, 255, 255, 0.2); align-self: flex-start; border-bottom-left-radius: 0; text-align: left; }
+        .chat-right { background: #ff1a53; align-self: flex-end; border-bottom-right-radius: 0; text-align: left; }
 
         section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px; position: relative; z-index: 10; }
 
-        /* --- LANDING --- */
         .landing-screen {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, #4d0012, #1a0005);
+            background: radial-gradient(circle, #7e122a, #2b050d);
             z-index: 5000;
             display: flex;
             flex-direction: column;
@@ -235,23 +229,13 @@
         }
 
         #magic-btn {
-            background: linear-gradient(135deg, #c9184a, #ff4d6d);
-            padding: 1.5rem 3.5rem;
+            background: linear-gradient(135deg, #e01e5a, #ff758c);
+            padding: 1.5rem 4rem;
             border-radius: 100px;
             font-weight: 800;
-            box-shadow: 0 10px 40px rgba(255, 77, 109, 0.6);
+            box-shadow: 0 10px 50px rgba(255, 77, 109, 0.7);
             transition: all 0.3s ease;
-        }
-
-        #no-btn {
-            position: relative;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            min-width: 140px;
-        }
-
-        #hearts-container {
-            z-index: 1; 
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -266,29 +250,28 @@
         <div id="lyric-wrapper" class="lyric-line-wrapper"></div>
     </div>
 
-    <!-- Landing Gateway -->
+    <!-- (1) Landing -->
     <div id="landing-page" class="landing-screen p-6 text-center">
         <div class="relative z-10 mb-16">
-            <h1 class="text-7xl md:text-[9rem] text-white font-cursive drop-shadow-2xl animate-pulse">Bhumika</h1>
-            <p class="romantic-text text-pink-200 text-2xl md:text-3xl mt-6 font-light italic tracking-wide">A cinematic journey into my heart...</p>
+            <h1 class="text-7xl md:text-[10rem] text-white font-cursive drop-shadow-2xl animate-pulse">Bhumika</h1>
+            <p class="romantic-text text-pink-100 text-2xl md:text-3xl mt-6 font-light italic tracking-wide">A cinematic journey into my heart...</p>
         </div>
-        <div class="w-full max-w-sm card-glass p-12 border border-white/10 relative">
+        <div class="w-full max-w-sm card-glass p-12 border border-white/20 relative">
             <button id="magic-btn" class="text-white text-3xl">Reveal Magic</button>
-            <p id="magic-hint" class="mt-10 text-pink-300 font-medium tracking-[0.2em] text-sm uppercase opacity-70">Tap to start our song</p>
+            <p id="magic-hint" class="mt-10 text-pink-200 font-medium tracking-[0.2em] text-sm uppercase opacity-80">Tap to start our song</p>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div id="main-content" class="relative z-10 hidden opacity-0 transition-opacity duration-1000">
         
-        <!-- (1) Hero -->
+        <!-- Hero Section -->
         <header class="h-screen flex flex-col items-center justify-center text-center px-4">
             <div class="reveal">
                 <h1 class="text-7xl md:text-[10rem] text-pink-50 mb-6 drop-shadow-2xl font-cursive">Bhumika</h1>
-                <p class="text-xl md:text-3xl tracking-[0.4em] uppercase text-pink-200 font-light">My Only One, My Everything</p>
+                <p class="text-xl md:text-3xl tracking-[0.4em] uppercase text-pink-100 font-light">My Only One, My Everything</p>
                 <div class="mt-20 flex flex-col items-center">
                     <p class="romantic-text animate-pulse">Bas scroll karte raho...</p>
-                    <div class="w-px h-20 bg-gradient-to-b from-pink-500 to-transparent mt-4"></div>
+                    <div class="w-px h-20 bg-gradient-to-b from-pink-400 to-transparent mt-4"></div>
                 </div>
             </div>
         </header>
@@ -313,8 +296,8 @@
 
         <!-- (4) Thinking -->
         <section class="bg-black/40">
-            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-left mx-4 border-l-8 border-pink-600 tilt-card">
-                <h2 class="text-4xl text-pink-400 mb-8 italic font-cursive">Thinking About You...</h2>
+            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-left mx-4 border-l-8 border-pink-500 tilt-card">
+                <h2 class="text-4xl text-pink-300 mb-8 italic font-cursive">Thinking About You...</h2>
                 <div class="romantic-text text-2xl md:text-3xl leading-relaxed silk-reveal" data-text="I just wanted to let u know... that I love you so much and you're always on my mind thinking about u and how pretty u are 24/7. I struggle to sleep thinking about u a lot... knowing that your the only pretty boy I want and need in my life..!!">
                 </div>
             </div>
@@ -326,7 +309,7 @@
                 <h2 class="text-6xl text-pink-300 font-cursive mb-12">Tumhari Aankhein... 🌷</h2>
                 <div class="space-y-8 text-xl md:text-3xl font-light text-pink-50 leading-loose silk-reveal" data-text="मैंने तुम्हारी आँखों में उन ख़वाबों को चलते हुए देखा है... जलते दिल की सस्कियो पर... ✨ उन आँसुओ को गिरते हुए देखा है... ❤️‍🩹 मैंने तुम्हारी आँखों में खाली मुक़द्दर को भी संजते हुए देखा है... हंसते हुए ख्यालों में अपने हमसफर को गले लगते हुए देखा है... मैंने तुम्हारी आँखों में सब कुछ पाते हुए देखा है...">
                 </div>
-                <p class="text-pink-400 font-bold mt-10 text-3xl md:text-5xl reveal">मैंने तुम्हारी आँखों में तुमsa बेहतर कुछ नहीं देखा है।</p>
+                <p class="text-pink-300 font-bold mt-10 text-3xl md:text-5xl reveal">मैंने तुम्हारी आँखों में तुमsa बेहतर कुछ नहीं देखा है।</p>
             </div>
         </section>
 
@@ -342,23 +325,23 @@
         <!-- (7) Chat Memories -->
         <section class="flex flex-col items-center">
             <div class="card-glass p-10 md:p-20 max-w-4xl reveal w-full mx-4 tilt-card" id="chat-tile">
-                <h2 class="text-5xl text-pink-400 mb-20 text-center font-cursive">Important Chat... ❤️</h2>
+                <h2 class="text-5xl text-pink-300 mb-20 text-center font-cursive">Important Chat... ❤️</h2>
                 <div class="w-full flex flex-col space-y-4">
-                    <div class="chat-bubble chat-left">"I love you when I wake up"</div>
-                    <div class="chat-bubble chat-left">"I love you when I go to bed"</div>
-                    <div class="chat-bubble chat-right">"I love you cause of your smile"</div>
-                    <div class="chat-bubble chat-left">"I love you cause of how funny u are"</div>
-                    <div class="chat-bubble chat-left">"I love you because how honest you are"</div>
-                    <div class="chat-bubble chat-right">"I love you to the moon and back"</div>
-                    <div class="chat-bubble chat-right text-pink-200">"And u will be forever mine and I'll forever be yours"</div>
-                    <div class="chat-bubble chat-left text-pink-400 font-bold">"If your ever sad or mad... I will always be there for u"</div>
+                    <div class="chat-bubble chat-left">I love you when I wake up</div>
+                    <div class="chat-bubble chat-left">I love you when I go to bed</div>
+                    <div class="chat-bubble chat-right">I love you cause of your smile</div>
+                    <div class="chat-bubble chat-left">I love you cause of how funny u are</div>
+                    <div class="chat-bubble chat-left">I love you because how honest you are</div>
+                    <div class="chat-bubble chat-right">I love you to the moon and back</div>
+                    <div class="chat-bubble chat-right text-pink-100 font-semibold">And u will be forever mine and I'll forever be yours</div>
+                    <div class="chat-bubble chat-left text-pink-400 font-bold italic">If your ever sad or mad... I will always be there for u</div>
                 </div>
             </div>
         </section>
 
         <!-- (8) Biggest Part -->
         <section class="bg-pink-950/10">
-            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-center mx-4 border-t-8 border-pink-500 tilt-card">
+            <div class="card-glass p-12 md:p-24 max-w-5xl reveal text-center mx-4 border-t-8 border-pink-400 tilt-card">
                 <div class="romantic-text text-3xl md:text-5xl font-bold mb-10 text-pink-300 font-cursive">"U are one of my biggest part of my whole life..."</div>
                 <div class="romantic-text text-2xl md:text-3xl italic leading-relaxed silk-reveal" data-text="I want to be with u always forever till we die... I appreciate having u in my life!!! For helping me through the bad times and being there to help me celebrate the good times.">
                 </div>
@@ -366,7 +349,7 @@
             </div>
         </section>
 
-        <!-- (9) Daily Rhythm Section -->
+        <!-- (9) Daily Rhythm -->
         <section class="bg-black/60">
             <div class="card-glass p-12 md:p-20 max-w-4xl reveal text-center mx-4 tilt-card">
                 <h2 class="text-5xl text-pink-400 font-cursive mb-12">My Whole Day...</h2>
@@ -380,13 +363,11 @@
 
         <!-- (10, 11, 12) Story Timeline -->
         <section class="relative">
-            <div class="timeline-line"></div>
             <div class="w-full max-w-6xl mx-auto px-6 py-20 space-y-40">
-                <h2 class="text-6xl text-pink-500 text-center mb-32 font-cursive">Our Story So Far</h2>
-                
+                <h2 class="text-6xl text-pink-400 text-center mb-32 font-cursive">Our Story So Far</h2>
                 <div class="flex flex-col md:flex-row items-center reveal gap-10">
                     <div class="md:w-1/2 text-center md:text-right">
-                        <h3 class="text-5xl text-pink-400 mb-4 font-cursive">Pehli Mulakat</h3>
+                        <h3 class="text-5xl text-pink-300 mb-4 font-cursive">Pehli Mulakat</h3>
                         <p class="romantic-text">Garden mein jab tum pehli baar aayi thi... humne haath naapa tha, yaad hai?</p>
                     </div>
                     <div class="md:w-1/2 flex justify-center">
@@ -396,29 +377,15 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="flex flex-col md:flex-row-reverse items-center reveal gap-10">
                     <div class="md:w-1/2 text-center md:text-left">
-                        <h3 class="text-5xl text-pink-400 mb-4 font-cursive">The Bouquet Moment</h3>
+                        <h3 class="text-5xl text-pink-300 mb-4 font-cursive">The Bouquet Moment</h3>
                         <p class="romantic-text">December mein jab tumne bouquet diya... us raat main ro diya tha khushi se.</p>
                     </div>
                     <div class="md:w-1/2 flex justify-center">
                         <div class="floral-container tilt-card">
                             <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg>
                             <img src="https://i.postimg.cc/HxXZgw5b/528056378-771947991886302-8605683557653560640-n.jpg" class="image-frame rounded-lg max-w-sm" style="transform: rotate(2deg)" alt="Bouquet">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col md:flex-row items-center reveal gap-10">
-                    <div class="md:w-1/2 text-center md:text-right">
-                        <h3 class="text-5xl text-pink-400 mb-4 font-cursive">3 Ghante Ki Walk</h3>
-                        <p class="romantic-text">Morning walk ke wo 3 ghante... haath pakad kar aisa laga ki kabhi nahi chhodna hai.</p>
-                    </div>
-                    <div class="md:w-1/2 flex justify-center">
-                        <div class="floral-container tilt-card">
-                            <svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg>
-                            <img src="https://i.postimg.cc/nhKqp3wF/528075826-615554604658640-8336941647408441677-n.jpg" class="image-frame rounded-lg max-w-sm" alt="Walk">
                         </div>
                     </div>
                 </div>
@@ -436,7 +403,7 @@
 
         <!-- (14) Gallery -->
         <section class="flex flex-col items-center">
-            <h2 class="text-6xl text-pink-500 mb-16 font-cursive">Moments Captured 📸</h2>
+            <h2 class="text-6xl text-pink-400 mb-16 font-cursive">Moments Captured 📸</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto px-6">
                 <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX3Npt.md.jpg" class="image-frame rounded-xl" alt="G1"></div></div>
                 <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX3wvI.md.jpg" class="image-frame rounded-xl" alt="G2"></div></div>
@@ -444,32 +411,16 @@
                 <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX3h2p.md.jpg" class="image-frame rounded-xl" alt="G4"></div></div>
                 <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX3SCG.md.jpg" class="image-frame rounded-xl" alt="G5"></div></div>
                 <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX3g44.md.jpg" class="image-frame rounded-xl" alt="G6"></div></div>
-                <div class="reveal"><div class="floral-container tilt-card"><svg class="vine-svg" viewBox="0 0 100 100"><path class="vine-path" d="M0,0 Q20,50 0,100 M100,0 Q80,50 100,100" /></svg><img src="https://iili.io/qHX343l.md.jpg" class="image-frame rounded-xl" alt="G7"></div></div>
             </div>
         </section>
 
-        <!-- (15, 16, 17) -->
-        <section>
-            <div class="card-glass p-12 md:p-20 max-w-4xl reveal text-center mx-4 border-r-8 border-pink-500 tilt-card">
-                <div class="romantic-text text-2xl md:text-4xl italic silk-reveal" data-text="There aren't enough words in the dictionary for me to tell u how glad I am to have u in my life. I am so lucky to have u by my side. I am eternally grateful to have your love.">
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="card-glass p-10 md:p-20 max-w-3xl reveal text-center mx-4 tilt-card">
-                <h2 class="text-4xl text-pink-300 mb-8 font-cursive">My Strongest Girl... 💪❤️</h2>
-                <div class="romantic-text text-xl md:text-3xl leading-relaxed silk-reveal" data-text="Your strength is what I admire the most. Your bravery, your intelligence, your passion... you are respectable in every way. (you are very strong >)">
-                </div>
-            </div>
-        </section>
-
+        <!-- (15) 42 Reasons -->
         <section class="flex flex-col items-center">
-            <h2 class="text-6xl text-pink-500 text-center mb-20 font-cursive">42 Reasons Why I Love You</h2>
+            <h2 class="text-6xl text-pink-400 text-center mb-20 font-cursive">42 Reasons Why I Love You</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-6" id="reasons-grid"></div>
         </section>
 
-        <!-- (18) Truth Reveal & Foolmati -->
+        <!-- (16) Truth Reveal & Foolmati -->
         <section>
             <div class="card-glass p-12 md:p-32 reveal text-center mx-4 relative overflow-hidden tilt-card">
                 <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
@@ -485,19 +436,18 @@
 
         <!-- Final Proposal Section -->
         <section class="flex flex-col items-center justify-center overflow-hidden">
-            <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-500 text-center mx-4 tilt-card">
-                <h2 class="text-6xl md:text-[8rem] text-pink-500 mb-10 font-cursive">Bhumika...</h2>
+            <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-400 text-center mx-4 tilt-card">
+                <h2 class="text-6xl md:text-[8rem] text-pink-400 mb-10 font-cursive">Bhumika...</h2>
                 <h3 id="proposal-question" class="text-4xl md:text-5xl text-white mb-20 font-light leading-relaxed">Will you stay with me forever?</h3>
-                
                 <div id="btn-container" class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[150px]">
-                    <button id="yes-btn" class="w-48 py-6 bg-pink-600 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-500/30">YES ❤️</button>
-                    <button id="no-btn" class="w-48 py-6 bg-gray-700/50 rounded-full font-bold text-2xl z-50">No</button>
+                    <button id="yes-btn" class="w-48 py-6 bg-pink-500 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-400/50">YES ❤️</button>
+                    <button id="no-btn" class="w-48 py-6 bg-gray-600/50 rounded-full font-bold text-2xl z-50">No</button>
                 </div>
-                <p id="response-msg" class="mt-12 text-4xl md:text-6xl text-pink-400 font-bold opacity-0 transition-opacity duration-1000 hidden"></p>
+                <p id="response-msg" class="mt-12 text-4xl md:text-6xl text-pink-300 font-bold opacity-0 transition-opacity duration-1000 hidden"></p>
             </div>
         </section>
 
-        <footer class="py-20 text-center opacity-30">
+        <footer class="py-20 text-center opacity-40">
             <p class="cursive text-3xl">Forever Yours, Bhumika. 2026.</p>
         </footer>
     </div>
@@ -519,8 +469,17 @@
             { time: 67.48, text: "Bhumika 🌸, pulled me in ⚓", mood: 'happy' },
             { time: 72.12, text: "I asked to love 💓 her once again 🔄", mood: 'happy' },
             { time: 79.22, text: "You 🫵 fell, I caught you 🤲", mood: 'happy' },
+            { time: 84.48, text: "I'll never let you 🫵 go 🕊️ again like I did 🚫", mood: 'happy' },
+            { time: 90.48, text: "Oh, I used to say 🗣️", mood: 'happy' },
+            { time: 94.00, text: "\"I would never fall in love ❤️ again until I found 📍 her\"", mood: 'happy' },
+            { time: 101.20, text: "I said, \"I would never fall unless it's you 🫵 I fall into 💘\"", mood: 'happy' },
             { time: 108.36, text: "I was lost 🗺️ within the darkness 🌃, but then I found 🔍 her", mood: 'emotional' },
             { time: 115.03, text: "I found 🌟 you 💏", mood: 'climax' },
+            { time: 121.54, text: "", mood: 'happy' }, 
+            { time: 136.96, text: "\"I would never fall in love ❤️ again until I found 📍 her\"", mood: 'happy' },
+            { time: 143.93, text: "I said, \"I would never fall unless it's you 🫵 I fall into 💘\"", mood: 'happy' },
+            { time: 150.95, text: "I was lost 🗺️ within the darkness 🌃, but then I found 🔍 her", mood: 'emotional' },
+            { time: 157.95, text: "I found 🌟 you 💏", mood: 'climax' },
             { time: 162.78, text: "Heaven ☁️👼✨", mood: 'climax' }
         ];
 
@@ -540,10 +499,12 @@
             });
         }
 
+        // --- OPTIMIZED HIGHLIGHTER ---
         function showLyric(text, mood) {
             const wrapper = document.getElementById('lyric-wrapper');
             clearAllLyrics();
             if (!text) return;
+
             document.body.className = `mood-${mood}`;
             const lineEl = document.createElement('div');
             lineEl.className = 'lyric-text current-line';
@@ -556,7 +517,7 @@
                 if (clean.includes('bhumika')) wordSpan.classList.add('name-shade');
                 else if (clean.includes('love')) wordSpan.classList.add('love-shade');
                 else if (clean.includes('you')) wordSpan.classList.add('you-shade');
-                else if (clean.includes('heaven')) wordSpan.classList.add('heaven-shade');
+
                 Array.from(word).forEach(char => {
                     const charSpan = document.createElement('span');
                     charSpan.textContent = char;
@@ -567,69 +528,82 @@
             });
             wrapper.appendChild(lineEl);
 
-            const charDelay = 120; 
+            const charDelay = 110; 
             const allWords = lineEl.querySelectorAll('.lyric-word');
 
             anime({
-                targets: lineEl.querySelectorAll('.lyric-char'), opacity: [0, 1], translateY: [10, 0],
-                delay: (el, i) => (text.startsWith("Bhumika") && i > 6) ? (i * charDelay + 800) : (i * charDelay),
-                easing: 'easeOutQuad', duration: 1000
+                targets: lineEl.querySelectorAll('.lyric-char'),
+                opacity: [0, 1],
+                translateY: [10, 0],
+                delay: (el, i) => {
+                    if (text.startsWith("Bhumika") && i >= 7) return (i * charDelay) + 1200;
+                    if (text.startsWith("I want you") && i >= 13) return (i * charDelay) + 1000;
+                    return i * charDelay;
+                },
+                easing: 'easeOutQuad',
+                duration: 600
             });
 
             allWords.forEach((w, idx) => {
-                let wordStart = 0;
-                for(let k=0; k<idx; k++) wordStart += wordsArr[k].length + 1;
-                let delay = wordStart * charDelay;
-                if (text.startsWith("Bhumika") && idx > 0) delay += 800;
+                let charCountBefore = 0;
+                for(let k=0; k<idx; k++) charCountBefore += wordsArr[k].length + 1;
+                let highlightDelay = charCountBefore * charDelay;
+
+                if (text.startsWith("Bhumika") && idx > 0) highlightDelay += 1200;
+                if (text.startsWith("I want you") && idx > 3) highlightDelay += 1000;
 
                 highlightTimeouts.push(setTimeout(() => {
                     if (lineEl.classList.contains('current-line')) {
-                        anime({
-                            targets: lineEl.querySelectorAll('.lyric-word.focused-word'),
-                            opacity: 0.4, scale: 0.95, filter: 'blur(1.5px)',
-                            duration: 800, easing: 'easeOutQuad'
+                        lineEl.querySelectorAll('.lyric-word.focused-word').forEach(oldW => {
+                            oldW.classList.remove('focused-word');
                         });
                         w.classList.add('focused-word');
+                    }
+                }, highlightDelay));
+            });
+        }
+
+        // --- OPTIMIZED CHAT ARRIVAL ---
+        function triggerChatBubbles() {
+            const bubbles = document.querySelectorAll('#chat-tile .chat-bubble');
+            
+            bubbles.forEach((bubble, bIdx) => {
+                bubble.style.opacity = '0';
+                const text = bubble.innerText;
+                bubble.innerHTML = '';
+                
+                // Prepare words inside bubble
+                text.split(' ').forEach(word => {
+                    const span = document.createElement('span');
+                    span.className = 'chat-word';
+                    span.innerHTML = word + '&nbsp;';
+                    bubble.appendChild(span);
+                });
+
+                // Bubble Arrival
+                anime({
+                    targets: bubble,
+                    opacity: [0, 1],
+                    translateX: bubble.classList.contains('chat-left') ? [-100, 0] : [100, 0],
+                    scale: [0.7, 1],
+                    delay: 2200 + (bIdx * 1200), // Slower stagger for readability
+                    duration: 1500,
+                    easing: 'easeOutElastic(1, .6)',
+                    complete: () => {
+                        // Word Reveal Inside Bubble
                         anime({
-                            targets: w, opacity: 1, scale: 1.15, filter: 'blur(0px)',
-                            duration: 800, easing: 'easeOutQuad'
+                            targets: bubble.querySelectorAll('.chat-word'),
+                            opacity: [0, 1],
+                            translateY: [5, 0],
+                            delay: anime.stagger(150),
+                            duration: 800,
+                            easing: 'easeOutQuad'
                         });
                     }
-                }, delay));
+                });
             });
         }
 
-        // --- SILK WORD REVEAL ---
-        function revealSilkText(element) {
-            const text = element.getAttribute('data-text');
-            if(!text) return;
-            element.innerHTML = ''; 
-            text.split(' ').forEach(word => {
-                const span = document.createElement('span');
-                span.className = 'silk-word'; span.innerHTML = word + '&nbsp;';
-                element.appendChild(span);
-            });
-            anime({
-                targets: element.querySelectorAll('.silk-word'),
-                opacity: [0, 1], translateY: [15, 0], filter: ['blur(4px)', 'blur(0px)'],
-                delay: anime.stagger(150), duration: 1200, easing: 'easeOutExpo'
-            });
-        }
-
-        // --- TILT ---
-        function applyTilt(e) {
-            const box = this.getBoundingClientRect();
-            const x = (e.clientX || (e.touches ? e.touches[0].clientX : box.left + box.width/2)) - (box.left + box.width/2);
-            const y = (e.clientY || (e.touches ? e.touches[0].clientY : box.top + box.height/2)) - (box.top + box.height/2);
-            this.style.transform = `perspective(3000px) rotateX(${-y/35}deg) rotateY(${x/35}deg) scale3d(1.02, 1.02, 1.02)`;
-        }
-        function resetTilt() { this.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; }
-        document.querySelectorAll('.tilt-card').forEach(c => {
-            c.addEventListener('mousemove', applyTilt); c.addEventListener('mouseleave', resetTilt);
-            c.addEventListener('touchmove', applyTilt); c.addEventListener('touchend', resetTilt);
-        });
-
-        // --- FLOATING HEARTS (Quantity increased) ---
         function createHeart() {
             const container = document.getElementById('hearts-container');
             if(!container) return;
@@ -637,30 +611,58 @@
             heart.className = 'heart';
             heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px'; 
-            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 25) + 'px'; 
+            heart.style.animationDuration = (Math.random() * 4 + 7) + 's';
             container.appendChild(heart);
-            setTimeout(() => heart.remove(), 12000);
+            setTimeout(() => heart.remove(), 11000);
         }
-        setInterval(createHeart, 500); 
+        setInterval(createHeart, 600); 
 
-        // --- CHAT POP-UP ---
-        function triggerChatBubbles() {
-            const bubbles = document.querySelectorAll('#chat-tile .chat-bubble');
-            bubbles.forEach(b => { b.style.opacity = '0'; });
+        const revealedElements = new Set();
+        const chatAlreadyTriggered = { val: false };
 
-            anime({
-                targets: bubbles,
-                opacity: [0, 1],
-                translateY: [40, 0],
-                scale: [0.7, 1],
-                delay: anime.stagger(600, {start: 2200}), 
-                easing: 'easeOutElastic(1, .8)',
-                duration: 1500
+        function checkScroll() {
+            document.querySelectorAll('.reveal').forEach(r => {
+                const rect = r.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 80) {
+                    if (!r.classList.contains('active')) {
+                        r.classList.add('active');
+                        if (r.id === 'chat-tile' && !chatAlreadyTriggered.val) {
+                            chatAlreadyTriggered.val = true;
+                            triggerChatBubbles();
+                        }
+                    }
+                    r.querySelectorAll('.silk-reveal').forEach(t => { 
+                        if (!revealedElements.has(t)) {
+                            revealedElements.add(t);
+                            const text = t.getAttribute('data-text');
+                            t.innerHTML = ''; 
+                            text.split(' ').forEach(word => {
+                                const span = document.createElement('span');
+                                span.className = 'silk-word'; span.innerHTML = word + '&nbsp;';
+                                t.appendChild(span);
+                            });
+                            anime({
+                                targets: t.querySelectorAll('.silk-word'),
+                                opacity: [0, 1], translateY: [15, 0], filter: ['blur(4px)', 'blur(0px)'],
+                                delay: anime.stagger(150), duration: 1200, easing: 'easeOutExpo'
+                            });
+                        } 
+                    });
+                }
             });
         }
+        window.addEventListener('scroll', checkScroll);
 
-        // --- AUTH & LOAD ---
+        const reasonsArr = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your affection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching the videos you send me", "The jokes we make together", "How you make me happy within 276 zetroseconds", "The way you can love someone like me", "How I can talk to you and still not get bored", "The way we met somewhere and are so close now", "The thought of you", "The smell of you", "The selfishness", "Your strength (you are very strong >)", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable"];
+        const reasonsGrid = document.getElementById('reasons-grid');
+        reasonsArr.forEach((r, i) => {
+            const div = document.createElement('div');
+            div.className = 'card-glass p-6 text-center reveal border-pink-500/20 hover:-translate-y-2 transition-all';
+            div.innerHTML = `<span class="block text-pink-500 text-xs font-bold mb-2 uppercase">Reason #${i+1}</span>${r}`;
+            reasonsGrid.appendChild(div);
+        });
+
         document.getElementById('magic-btn').addEventListener('click', () => {
             audio.play();
             document.getElementById('magic-btn').style.display = 'none';
@@ -683,56 +685,7 @@
             }
         });
 
-        audio.onended = () => {
-            anime({ targets: '#lyrics-container', opacity: 0, translateY: -50, duration: 1500, easing: 'easeInQuad', complete: () => document.getElementById('lyrics-container').style.display = 'none' });
-        };
-
-        const revealedElements = new Set();
-        const chatAlreadyTriggered = { val: false };
-
-        function checkScroll() {
-            document.querySelectorAll('.reveal').forEach(r => {
-                const rect = r.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 80) {
-                    if (!r.classList.contains('active')) {
-                        r.classList.add('active');
-                        if (r.id === 'chat-tile' && !chatAlreadyTriggered.val) {
-                            chatAlreadyTriggered.val = true;
-                            triggerChatBubbles();
-                        }
-                    }
-
-                    r.querySelectorAll('.silk-reveal').forEach(t => { 
-                        if (!revealedElements.has(t)) { revealedElements.add(t); revealSilkText(t); } 
-                    });
-                }
-            });
-        }
-        window.addEventListener('scroll', checkScroll);
-
-        const reasonsArr = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your affection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching the videos you send me", "The jokes we make together", "How you make me happy within 276 zetroseconds", "The way you can love someone like me", "How I can talk to you and still not get bored", "The way we met somewhere and are so close now", "The thought of you", "The smell of you", "The selfishness", "Your strength (you are very strong >)", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable"];
-        const reasonsGrid = document.getElementById('reasons-grid');
-        reasonsArr.forEach((r, i) => {
-            const div = document.createElement('div');
-            div.className = 'card-glass p-6 text-center reveal border-pink-500/20 hover:-translate-y-2 transition-all';
-            div.innerHTML = `<span class="block text-pink-500 text-xs font-bold mb-2 uppercase">Reason #${i+1}</span>${r}`;
-            reasonsGrid.appendChild(div);
-        });
-
-        const noBtn = document.getElementById('no-btn');
-        const personalPhrases = ["Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Juliet wait! 🥺", "Only One ho meri! ❤️", "Juliet mat bano! 🌹"];
-        function handleNoMasti(e) {
-            if (e.type === 'touchstart') e.preventDefault();
-            const x = Math.random() * (window.innerWidth - 300) - (window.innerWidth / 2 - 150);
-            const y = Math.random() * (window.innerHeight - 300) - (window.innerHeight / 2 - 150);
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-            noBtn.innerText = personalPhrases[Math.floor(Math.random() * personalPhrases.length)];
-        }
-        noBtn.addEventListener('mouseover', handleNoMasti);
-        noBtn.addEventListener('touchstart', handleNoMasti);
-
         document.getElementById('yes-btn').addEventListener('click', () => {
-            if (navigator.vibrate) navigator.vibrate(100);
             document.getElementById('btn-container').style.display = 'none';
             document.getElementById('proposal-question').style.display = 'none';
             const msg = document.getElementById('response-msg');
@@ -745,7 +698,20 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 }); 
         document.querySelectorAll('.floral-container').forEach(v => vineObserver.observe(v));
+
+        function applyTilt(e) {
+            const box = this.getBoundingClientRect();
+            const x = (e.clientX || (e.touches ? e.touches[0].clientX : box.left + box.width/2)) - (box.left + box.width/2);
+            const y = (e.clientY || (e.touches ? e.touches[0].clientY : box.top + box.height/2)) - (box.top + box.height/2);
+            this.style.transform = `perspective(3000px) rotateX(${-y/35}deg) rotateY(${x/35}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+        function resetTilt() { this.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; }
+        document.querySelectorAll('.tilt-card').forEach(c => {
+            c.addEventListener('mousemove', applyTilt); c.addEventListener('mouseleave', resetTilt);
+            c.addEventListener('touchmove', applyTilt); c.addEventListener('touchend', resetTilt);
+        });
     </script>
 </body>
 </html>
+
 
