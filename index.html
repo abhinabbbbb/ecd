@@ -126,12 +126,11 @@
         }
 
         .lyric-char { display: inline-block; opacity: 0; transform: translateY(8px); }
-
         .name-shade { color: #ffb3c6 !important; } 
         .love-shade { color: #ff4d6d !important; } 
         .you-shade { color: #80e5ff !important; } 
 
-        /* --- CINEMATIC REVEAL --- */
+        /* --- REVEAL ANIMATION --- */
         .reveal {
             opacity: 0;
             transform: perspective(3000px) rotateY(-45deg) translateZ(-100px);
@@ -139,7 +138,6 @@
             transition: transform 2.0s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.6s ease, filter 2.0s ease;
             will-change: transform, opacity;
         }
-
         .reveal.active {
             opacity: 1;
             transform: perspective(3000px) rotateY(0deg) translateZ(0);
@@ -154,7 +152,6 @@
             font-size: 1rem;
         }
         @media (min-width: 768px) { .chat-bubble { max-width: 80%; font-size: 1.15rem; } }
-
         .chat-left { transform: translateX(-40px) scale(0.9); background: rgba(255, 255, 255, 0.15); align-self: flex-start; border-radius: 1.5rem 1.5rem 1.5rem 0; }
         .chat-right { transform: translateX(40px) scale(0.9); background: #ff1a53; align-self: flex-end; border-radius: 1.5rem 1.5rem 0 1.5rem; }
         .chat-word { display: inline-block; opacity: 0; transform: translateY(5px); }
@@ -190,7 +187,6 @@
             pointer-events: none;
             user-select: none;
         }
-
         @keyframes float-up {
             0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
@@ -217,13 +213,11 @@
             text-transform: uppercase;
         }
 
-        /* --- FIXED NO BUTTON --- */
         #no-btn {
             z-index: 1000;
             will-change: transform, left, top;
             touch-action: none;
             user-select: none;
-            pointer-events: auto;
         }
     </style>
 </head>
@@ -238,7 +232,7 @@
         <div id="lyric-wrapper" class="lyric-line-wrapper"></div>
     </div>
 
-    <!-- Landing -->
+    <!-- (1) Landing Page -->
     <div id="landing-page" class="fixed inset-0 z-[5000] flex flex-col items-center justify-center bg-black text-center p-6">
         <div class="relative z-10 mb-12">
             <h1 class="text-6xl md:text-[10rem] text-white font-cursive drop-shadow-2xl animate-pulse">Bhumika</h1>
@@ -264,7 +258,7 @@
             </div>
         </header>
 
-        <!-- (2) Masterpiece -->
+        <!-- (2) Masterpiece Section -->
         <section class="bg-pink-900/5">
             <div class="card-glass p-8 md:p-24 max-w-4xl reveal text-center mx-4 tilt-card">
                 <h2 class="text-4xl md:text-5xl text-pink-300 mb-8 font-cursive">You are My Masterpiece... 🎨</h2>
@@ -273,7 +267,7 @@
             </div>
         </section>
 
-        <!-- (3) Letter -->
+        <!-- (3) Letter Section -->
         <section>
             <div class="card-glass p-6 md:p-20 max-w-5xl reveal mx-auto border border-pink-500/10 tilt-card">
                 <h2 class="text-4xl md:text-5xl text-pink-400 mb-8 font-cursive">Babyy... 🥺</h2>
@@ -282,7 +276,7 @@
             </div>
         </section>
 
-        <!-- (4) Thinking -->
+        <!-- (4) Thinking Section -->
         <section class="bg-black/40">
             <div class="card-glass p-8 md:p-24 max-w-5xl reveal text-left mx-4 border-l-8 border-pink-500 tilt-card">
                 <h2 class="text-3xl md:text-4xl text-pink-300 mb-6 italic font-cursive">Thinking About You...</h2>
@@ -291,7 +285,7 @@
             </div>
         </section>
 
-        <!-- (5) Hindi Poetry -->
+        <!-- (5) Hindi Poetry Section -->
         <section class="bg-black/20">
             <div class="card-glass p-8 md:p-20 max-w-4xl reveal text-center mx-4 tilt-card">
                 <h2 class="text-5xl md:text-6xl text-pink-300 font-cursive mb-10">Tumhari Aankhein... 🌷</h2>
@@ -301,7 +295,7 @@
             </div>
         </section>
 
-        <!-- (6) Hug -->
+        <!-- (6) Hug Section -->
         <section>
             <div class="card-glass p-8 md:p-20 max-w-4xl reveal text-center mx-4 tilt-card">
                 <div class="text-5xl md:text-6xl mb-6">🫂❤️</div>
@@ -310,7 +304,7 @@
             </div>
         </section>
 
-        <!-- (7) Chat Memories -->
+        <!-- (7) Chat Memories Section -->
         <section class="flex flex-col items-center">
             <div class="card-glass p-6 md:p-20 max-w-4xl reveal w-full mx-4 tilt-card" id="chat-tile">
                 <h2 class="text-4xl md:text-5xl text-pink-300 mb-12 text-center font-cursive">Important Chat... ❤️</h2>
@@ -327,7 +321,7 @@
             </div>
         </section>
 
-        <!-- (8) Biggest Part -->
+        <!-- (8) Biggest Part Section -->
         <section class="bg-pink-950/10">
             <div class="card-glass p-8 md:p-24 max-w-5xl reveal text-center mx-4 border-t-8 border-pink-400 tilt-card">
                 <div class="romantic-text text-2xl md:text-5xl font-bold mb-8 text-pink-300 font-cursive">"U are one of my biggest part of my whole life..."</div>
@@ -337,7 +331,7 @@
             </div>
         </section>
 
-        <!-- (9) Daily Rhythm -->
+        <!-- (9) Daily Rhythm Section -->
         <section class="bg-black/60">
             <div class="card-glass p-8 md:p-20 max-w-4xl reveal text-center mx-4 tilt-card">
                 <h2 class="text-4xl md:text-5xl text-pink-400 font-cursive mb-10">My Whole Day...</h2>
@@ -349,7 +343,7 @@
             </div>
         </section>
 
-        <!-- (10, 11) Story Timeline -->
+        <!-- (10, 11) Story Timeline Section -->
         <section class="relative">
             <div class="w-full max-w-6xl mx-auto px-6 py-20 space-y-32">
                 <h2 class="text-5xl md:text-6xl text-pink-400 text-center mb-24 font-cursive">Our Story So Far</h2>
@@ -380,7 +374,7 @@
             </div>
         </section>
 
-        <!-- (12) Gallery -->
+        <!-- (12) Gallery Section -->
         <section class="flex flex-col items-center">
             <h2 class="text-5xl md:text-6xl text-pink-400 mb-12 font-cursive text-center">Moments Captured 📸</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
@@ -393,10 +387,24 @@
             </div>
         </section>
 
-        <!-- (13) 42 Reasons -->
+        <!-- (13) 42 Reasons Section -->
         <section class="flex flex-col items-center">
             <h2 class="text-5xl md:text-6xl text-pink-400 text-center mb-16 font-cursive">42 Reasons Why I Love You</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto px-4" id="reasons-grid"></div>
+        </section>
+
+        <!-- (14) Truth Reveal Section -->
+        <section>
+            <div class="card-glass p-12 md:p-32 reveal text-center mx-4 relative overflow-hidden tilt-card">
+                <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
+                <div class="romantic-text text-3xl md:text-6xl font-cursive text-pink-200 silk-reveal" data-text="Babyyy, know this truth... you are my ONLY ONE. Forever.">
+                </div>
+                <div class="mt-12 text-center">
+                    <h3 class="text-5xl mb-6 font-cursive text-pink-400">My Dear Foolmati! 🤡❤️</h3>
+                    <div class="romantic-text text-xl md:text-3xl italic silk-reveal" data-text="Babyy - if you could ever see yourself through my eyes, you'd never doubt your worth for even a second~">
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Final Proposal Section -->
@@ -407,7 +415,6 @@
                 
                 <div id="btn-container" class="flex flex-col md:flex-row gap-8 justify-center items-center min-h-[350px] w-full relative">
                     <button id="yes-btn" class="w-40 md:w-48 py-5 md:py-6 bg-pink-500 rounded-full font-bold text-xl md:text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-400/50 relative z-[101]">YES ❤️</button>
-                    <!-- Button starts relative but will be moved via absolute later -->
                     <button id="no-btn" class="w-40 md:w-48 py-5 md:py-6 bg-gray-600/50 rounded-full font-bold text-xl md:text-2xl relative z-[100]">No</button>
                 </div>
                 <p id="response-msg" class="mt-8 text-2xl md:text-6xl text-pink-200 font-bold opacity-0 transition-opacity duration-1000 hidden px-2"></p>
@@ -446,7 +453,8 @@
             { time: 143.93, text: "I said, \"I would never fall unless it's you 🫵 I fall into 💘\"", mood: 'happy' },
             { time: 150.95, text: "I was lost 🗺️ within the darkness 🌃, but then I found 🔍 her", mood: 'emotional' },
             { time: 157.95, text: "I found 🌟 you 💏", mood: 'climax' },
-            { time: 162.78, text: "Heaven ☁️👼✨", mood: 'climax' }
+            { time: 162.78, text: "Heaven ☁️👼✨", mood: 'climax' },
+            { time: 168.00, text: "", mood: 'happy' } // Clear entries to prevent sticking
         ];
 
         let currentLyricIndex = -1;
@@ -558,52 +566,41 @@
             });
         }
 
-        // --- NEW BULLETPROOF NO BUTTON LOGIC ---
         const noBtn = document.getElementById('no-btn');
         const proposalCard = document.getElementById('proposal-card');
-        const phrases = ["Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Juliet wait! 🥺", "Only One ho meri! ❤️", "Juliet mat bano! 🌹", "Pleaseeee 🥺", "No way! 😂", "Wait! 🛑"];
+        const phrases = ["Foolmati? 🤡", "Garden walk याद है? 🌳", "December bouquet? 💐", "Juliet wait! 🥺", "Only One ho meri! ❤️", "Juliet मत बनो! 🌹", "Pleaseeee 🥺", "No way! 😂", "Wait! 🛑"];
         
         function moveNoButton(e) {
             if (e) e.preventDefault();
             
-            // Re-calculate rects every time to be safe
             const cardRect = proposalCard.getBoundingClientRect();
             const btnWidth = noBtn.offsetWidth || 100;
-            const btnHeight = noBtn.offsetHeight || 50;
+            const btnHeight = noBtn.offsetHeight || 40;
             
-            // Margin from edges
-            const padding = 40;
+            // Strictly stay within Card boundaries
+            const maxX = cardRect.width - btnWidth - 40;
+            const maxY = cardRect.height - btnHeight - 40;
             
-            // Calculate strictly within card's inner width and height
-            // We use proposalCard as parent, so coordinates are local
-            const maxX = cardRect.width - btnWidth - padding;
-            const maxY = cardRect.height - btnHeight - padding;
+            // Random spot with safety padding
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(160, Math.floor(Math.random() * maxY)); // Avoid overlapping the question text
             
-            // Random spot with safety floor
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(150, Math.floor(Math.random() * maxY)); // Start Y higher to avoid overlapping text
-            
-            // Switch to absolute positioning strictly within card
             noBtn.style.position = 'absolute';
             
-            // Animate using Anime.js for smooth visible flight
             anime({
                 targets: noBtn,
                 left: randomX + 'px',
                 top: randomY + 'px',
-                duration: 350,
-                easing: 'easeOutExpo'
+                duration: 300,
+                easing: 'easeOutCubic'
             });
 
-            // Random funny text
             noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
         }
 
-        // Mouse & Touch triggers
         noBtn.addEventListener('mouseenter', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton, {passive: false});
 
-        // --- YES BUTTON LOGIC ---
         document.getElementById('yes-btn').addEventListener('click', () => {
             document.getElementById('btn-container').style.display = 'none';
             document.getElementById('proposal-question').style.display = 'none';
@@ -616,7 +613,6 @@
             }, 50);
         });
 
-        // --- HEART FACTORY ---
         function createHeart() {
             const container = document.getElementById('hearts-container');
             if(!container) return;
@@ -631,7 +627,6 @@
         }
         setInterval(createHeart, 600); 
 
-        // --- SCROLL OBSERVER ---
         const revealedElements = new Set();
         let chatTriggered = false;
 
@@ -668,7 +663,6 @@
         }
         window.addEventListener('scroll', checkScroll);
 
-        // --- 42 REASONS ---
         const reasonsArr = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your affection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching the videos you send me", "The jokes we make together", "How you make me happy within 276 zetroseconds", "The way you can love someone like me", "How I can talk to you and still not get bored", "The way we met somewhere and are so close now", "The thought of you", "The smell of you", "The selfishness", "Your strength (you are very strong >)", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable"];
         const reasonsGrid = document.getElementById('reasons-grid');
         reasonsArr.forEach((r, i) => {
@@ -678,7 +672,6 @@
             reasonsGrid.appendChild(div);
         });
 
-        // --- INITIALIZER ---
         document.getElementById('magic-btn').addEventListener('click', () => {
             audio.play().catch(() => {});
             document.getElementById('landing-page').style.opacity = '0';
@@ -705,5 +698,4 @@
     </script>
 </body>
 </html>
-
 
