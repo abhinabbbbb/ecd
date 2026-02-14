@@ -152,7 +152,6 @@
         }
         .chat-left { transform: translateX(-60px) scale(0.8); }
         .chat-right { transform: translateX(60px) scale(0.8); }
-
         .chat-word { display: inline-block; opacity: 0; transform: translateY(5px); }
 
         .tilt-card { transform-style: preserve-3d; perspective: 1200px; }
@@ -217,17 +216,6 @@
 
         section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px; position: relative; z-index: 10; }
 
-        .landing-screen {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, #7e122a, #2b050d);
-            z-index: 5000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
         #magic-btn {
             background: linear-gradient(135deg, #e01e5a, #ff758c);
             padding: 1.5rem 4rem;
@@ -236,6 +224,12 @@
             box-shadow: 0 10px 50px rgba(255, 77, 109, 0.7);
             transition: all 0.3s ease;
             text-transform: uppercase;
+        }
+
+        #no-btn {
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
         }
     </style>
 </head>
@@ -251,20 +245,20 @@
     </div>
 
     <!-- (1) Landing -->
-    <div id="landing-page" class="landing-screen p-6 text-center">
+    <div id="landing-page" class="fixed inset-0 z-[5000] flex flex-col items-center justify-center bg-black text-center p-6">
         <div class="relative z-10 mb-16">
             <h1 class="text-7xl md:text-[10rem] text-white font-cursive drop-shadow-2xl animate-pulse">Bhumika</h1>
             <p class="romantic-text text-pink-100 text-2xl md:text-3xl mt-6 font-light italic tracking-wide">A cinematic journey into my heart...</p>
         </div>
         <div class="w-full max-w-sm card-glass p-12 border border-white/20 relative">
             <button id="magic-btn" class="text-white text-3xl">Reveal Magic</button>
-            <p id="magic-hint" class="mt-10 text-pink-200 font-medium tracking-[0.2em] text-sm uppercase opacity-80">Tap to start our song</p>
+            <p class="mt-10 text-pink-200 font-medium tracking-[0.2em] text-sm uppercase opacity-80">Tap to start our song</p>
         </div>
     </div>
 
     <div id="main-content" class="relative z-10 hidden opacity-0 transition-opacity duration-1000">
         
-        <!-- Hero Section -->
+        <!-- (1) Hero -->
         <header class="h-screen flex flex-col items-center justify-center text-center px-4">
             <div class="reveal">
                 <h1 class="text-7xl md:text-[10rem] text-pink-50 mb-6 drop-shadow-2xl font-cursive">Bhumika</h1>
@@ -361,7 +355,7 @@
             </div>
         </section>
 
-        <!-- (10, 11, 12) Story Timeline -->
+        <!-- (10, 11) Story Timeline -->
         <section class="relative">
             <div class="w-full max-w-6xl mx-auto px-6 py-20 space-y-40">
                 <h2 class="text-6xl text-pink-400 text-center mb-32 font-cursive">Our Story So Far</h2>
@@ -392,16 +386,7 @@
             </div>
         </section>
 
-        <!-- (13) No Replacement -->
-        <section class="bg-pink-900/10">
-            <div class="card-glass p-12 md:p-24 max-w-4xl reveal text-center mx-4 border-b-4 border-pink-500/30 tilt-card">
-                <div class="romantic-text text-3xl md:text-5xl leading-relaxed silk-reveal font-bold" data-text="No matter what your mind tells you, I want you to know this truth... you are my only one, my forever and NO ONE could ever replace you.">
-                </div>
-                <p class="mt-8 text-pink-400 text-2xl italic font-cursive">My only babeee, my wifeyyy, my honeyyy... ❤️</p>
-            </div>
-        </section>
-
-        <!-- (14) Gallery -->
+        <!-- (12) Gallery -->
         <section class="flex flex-col items-center">
             <h2 class="text-6xl text-pink-400 mb-16 font-cursive">Moments Captured 📸</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto px-6">
@@ -414,13 +399,13 @@
             </div>
         </section>
 
-        <!-- (15) 42 Reasons -->
+        <!-- (13) 42 Reasons -->
         <section class="flex flex-col items-center">
             <h2 class="text-6xl text-pink-400 text-center mb-20 font-cursive">42 Reasons Why I Love You</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-6" id="reasons-grid"></div>
         </section>
 
-        <!-- (16) Truth Reveal & Foolmati -->
+        <!-- (14) Truth Reveal & Foolmati -->
         <section>
             <div class="card-glass p-12 md:p-32 reveal text-center mx-4 relative overflow-hidden tilt-card">
                 <div class="absolute inset-0 bg-pink-500 opacity-5 animate-pulse"></div>
@@ -434,14 +419,14 @@
             </div>
         </section>
 
-        <!-- Final Proposal Section -->
+        <!-- Final Proposal -->
         <section class="flex flex-col items-center justify-center overflow-hidden">
-            <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-400 text-center mx-4 tilt-card">
+            <div class="card-glass p-12 md:p-24 reveal max-w-4xl w-full border-t-4 border-pink-400 text-center mx-4 tilt-card relative">
                 <h2 class="text-6xl md:text-[8rem] text-pink-400 mb-10 font-cursive">Bhumika...</h2>
                 <h3 id="proposal-question" class="text-4xl md:text-5xl text-white mb-20 font-light leading-relaxed">Will you stay with me forever?</h3>
-                <div id="btn-container" class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[150px]">
+                <div id="btn-container" class="flex flex-col md:flex-row gap-12 justify-center items-center min-h-[200px] w-full">
                     <button id="yes-btn" class="w-48 py-6 bg-pink-500 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl shadow-pink-400/50">YES ❤️</button>
-                    <button id="no-btn" class="w-48 py-6 bg-gray-600/50 rounded-full font-bold text-2xl z-50">No</button>
+                    <button id="no-btn" class="w-48 py-6 bg-gray-600/50 rounded-full font-bold text-2xl">No</button>
                 </div>
                 <p id="response-msg" class="mt-12 text-4xl md:text-6xl text-pink-300 font-bold opacity-0 transition-opacity duration-1000 hidden"></p>
             </div>
@@ -491,15 +476,9 @@
             highlightTimeouts.forEach(clearTimeout);
             highlightTimeouts = [];
             const wrapper = document.getElementById('lyric-wrapper');
-            wrapper.querySelectorAll('.lyric-text').forEach(line => {
-                if(!line.classList.contains('old-line')) {
-                    line.classList.add('old-line');
-                    setTimeout(() => line.remove(), 800);
-                }
-            });
+            wrapper.innerHTML = '';
         }
 
-        // --- OPTIMIZED HIGHLIGHTER ---
         function showLyric(text, mood) {
             const wrapper = document.getElementById('lyric-wrapper');
             clearAllLyrics();
@@ -566,37 +545,33 @@
         // --- OPTIMIZED CHAT ARRIVAL ---
         function triggerChatBubbles() {
             const bubbles = document.querySelectorAll('#chat-tile .chat-bubble');
-            
             bubbles.forEach((bubble, bIdx) => {
                 bubble.style.opacity = '0';
-                const text = bubble.innerText;
+                const originalText = bubble.innerText;
                 bubble.innerHTML = '';
                 
-                // Prepare words inside bubble
-                text.split(' ').forEach(word => {
+                originalText.split(' ').forEach(word => {
                     const span = document.createElement('span');
                     span.className = 'chat-word';
                     span.innerHTML = word + '&nbsp;';
                     bubble.appendChild(span);
                 });
 
-                // Bubble Arrival
                 anime({
                     targets: bubble,
                     opacity: [0, 1],
                     translateX: bubble.classList.contains('chat-left') ? [-100, 0] : [100, 0],
                     scale: [0.7, 1],
-                    delay: 2200 + (bIdx * 1200), // Slower stagger for readability
+                    delay: 2200 + (bIdx * 1200),
                     duration: 1500,
                     easing: 'easeOutElastic(1, .6)',
                     complete: () => {
-                        // Word Reveal Inside Bubble
                         anime({
                             targets: bubble.querySelectorAll('.chat-word'),
                             opacity: [0, 1],
                             translateY: [5, 0],
-                            delay: anime.stagger(150),
-                            duration: 800,
+                            delay: anime.stagger(200),
+                            duration: 1000,
                             easing: 'easeOutQuad'
                         });
                     }
@@ -604,6 +579,34 @@
             });
         }
 
+        // --- NO BUTTON MASTI ---
+        const noBtn = document.getElementById('no-btn');
+        const phrases = ["Foolmati? 🤡", "Garden walk yaad hai? 🌳", "December bouquet? 💐", "Juliet wait! 🥺", "Only One ho meri! ❤️", "Juliet mat bano! 🌹", "Pleaseeee 🥺", "No way! 😂"];
+        
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - 200) - (window.innerWidth / 2 - 100);
+            const y = Math.random() * (window.innerHeight - 200) - (window.innerHeight / 2 - 100);
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); });
+
+        // --- YES BUTTON ---
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            document.getElementById('btn-container').style.display = 'none';
+            document.getElementById('proposal-question').style.display = 'none';
+            const msg = document.getElementById('response-msg');
+            msg.classList.remove('hidden');
+            msg.innerText = "I KNEW IT! ❤️ Forever & Always! I LOVE YOU BHUMIKA!";
+            setTimeout(() => { 
+                msg.style.opacity = "1"; 
+                confetti({ particleCount: 500, spread: 160, origin: { y: 0.6 } }); 
+            }, 50);
+        });
+
+        // --- HEART FACTORY ---
         function createHeart() {
             const container = document.getElementById('hearts-container');
             if(!container) return;
@@ -616,10 +619,11 @@
             container.appendChild(heart);
             setTimeout(() => heart.remove(), 11000);
         }
-        setInterval(createHeart, 600); 
+        setInterval(createHeart, 500); 
 
+        // --- SCROLL & REVEAL ---
         const revealedElements = new Set();
-        const chatAlreadyTriggered = { val: false };
+        let chatTriggered = false;
 
         function checkScroll() {
             document.querySelectorAll('.reveal').forEach(r => {
@@ -627,8 +631,8 @@
                 if (rect.top < window.innerHeight - 80) {
                     if (!r.classList.contains('active')) {
                         r.classList.add('active');
-                        if (r.id === 'chat-tile' && !chatAlreadyTriggered.val) {
-                            chatAlreadyTriggered.val = true;
+                        if (r.id === 'chat-tile' && !chatTriggered) {
+                            chatTriggered = true;
                             triggerChatBubbles();
                         }
                     }
@@ -654,6 +658,7 @@
         }
         window.addEventListener('scroll', checkScroll);
 
+        // --- 42 REASONS GRID ---
         const reasonsArr = ["Your eyes", "Your hair", "Your lips", "Your name", "Your personality", "Your laugh", "Your smile", "Your voice", "Your hands", "Your embrace", "Your joy", "Your tears", "Your face", "Your kindness", "Your affection", "Our friendship", "Your beauty", "Your love", "Your hugs", "Your messages", "Your style", "Your forgiveness", "Your perfection", "The time we spend together", "The memories we made", "The sound of you", "Watching the videos you send me", "The jokes we make together", "How you make me happy within 276 zetroseconds", "The way you can love someone like me", "How I can talk to you and still not get bored", "The way we met somewhere and are so close now", "The thought of you", "The smell of you", "The selfishness", "Your strength (you are very strong >)", "Your bravery", "Your intelligence", "Your passion", "Your creativity", "Your patience", "Your respectable"];
         const reasonsGrid = document.getElementById('reasons-grid');
         reasonsArr.forEach((r, i) => {
@@ -663,18 +668,16 @@
             reasonsGrid.appendChild(div);
         });
 
+        // --- AUDIO ENGINE ---
         document.getElementById('magic-btn').addEventListener('click', () => {
             audio.play();
-            document.getElementById('magic-btn').style.display = 'none';
-            audio.onplaying = () => {
-                document.getElementById('landing-page').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('landing-page').style.display = 'none';
-                    document.getElementById('main-content').classList.remove('hidden');
-                    document.getElementById('lyrics-container').style.display = 'block'; 
-                    setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; checkScroll(); }, 50);
-                }, 1000);
-            };
+            document.getElementById('landing-page').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('landing-page').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+                document.getElementById('lyrics-container').style.display = 'block'; 
+                setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; checkScroll(); }, 50);
+            }, 1000);
         });
 
         audio.addEventListener('timeupdate', () => {
@@ -685,31 +688,23 @@
             }
         });
 
-        document.getElementById('yes-btn').addEventListener('click', () => {
-            document.getElementById('btn-container').style.display = 'none';
-            document.getElementById('proposal-question').style.display = 'none';
-            const msg = document.getElementById('response-msg');
-            msg.classList.remove('hidden');
-            msg.innerText = "I KNEW IT! ❤️ Forever & Always! I LOVE YOU BHUMIKA!";
-            setTimeout(() => { msg.style.opacity = "1"; confetti({ particleCount: 400, spread: 150, origin: { y: 0.6 } }); }, 50);
+        // --- TILT EFFECT ---
+        function applyTilt(e) {
+            const box = this.getBoundingClientRect();
+            const x = (e.clientX || (e.touches ? e.touches[0].clientX : box.left + box.width/2)) - (box.left + box.width/2);
+            const y = (e.clientY || (e.touches ? e.touches[0].clientY : box.top + box.height/2)) - (box.top + box.height/2);
+            this.style.transform = `perspective(1000px) rotateX(${-y/30}deg) rotateY(${x/30}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+        function resetTilt() { this.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; }
+        document.querySelectorAll('.tilt-card').forEach(c => {
+            c.addEventListener('mousemove', applyTilt); c.addEventListener('mouseleave', resetTilt);
+            c.addEventListener('touchmove', applyTilt); c.addEventListener('touchend', resetTilt);
         });
 
         const vineObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 }); 
         document.querySelectorAll('.floral-container').forEach(v => vineObserver.observe(v));
-
-        function applyTilt(e) {
-            const box = this.getBoundingClientRect();
-            const x = (e.clientX || (e.touches ? e.touches[0].clientX : box.left + box.width/2)) - (box.left + box.width/2);
-            const y = (e.clientY || (e.touches ? e.touches[0].clientY : box.top + box.height/2)) - (box.top + box.height/2);
-            this.style.transform = `perspective(3000px) rotateX(${-y/35}deg) rotateY(${x/35}deg) scale3d(1.02, 1.02, 1.02)`;
-        }
-        function resetTilt() { this.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; }
-        document.querySelectorAll('.tilt-card').forEach(c => {
-            c.addEventListener('mousemove', applyTilt); c.addEventListener('mouseleave', resetTilt);
-            c.addEventListener('touchmove', applyTilt); c.addEventListener('touchend', resetTilt);
-        });
     </script>
 </body>
 </html>
